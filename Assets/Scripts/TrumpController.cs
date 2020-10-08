@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class TrumpController : MonoBehaviour
 {
+    [SerializeField]
+    Sprite[] cards;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,4 +18,24 @@ public class TrumpController : MonoBehaviour
     {
 
     }
+}
+public class Card
+{
+    int num;
+}
+public class Hart : Card
+{
+
+}
+public class Spade : Card
+{
+
+}
+public class Clover : Card
+{
+
+}
+public class Daia : Card
+{
+
 }
