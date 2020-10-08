@@ -13,6 +13,8 @@ public class CharacterBase : MonoBehaviour
     Text scoreText;
     protected int characterScore;
 
+    protected List<int> drawCards;
+
     // Start is called before the first frame update
     protected virtual void Start()
     {

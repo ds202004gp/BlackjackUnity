@@ -7,16 +7,19 @@ public class TrumpController : MonoBehaviour
     [SerializeField]
     Sprite[] cards;
 
-    // Start is called before the first frame update
-    void Start()
+    List<int> drawCards = new List<int>();
+
+    public Sprite DrawCard()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        while (true)
+        {
+            int rand = Random.Range(1, 54);
+            if (!drawCards.Contains(rand))
+            {
+                drawCards.Add(rand);
+                return cards[rand];
+            }
+        }
     }
 }
 public class Card
