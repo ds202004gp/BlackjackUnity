@@ -4,21 +4,30 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Button))]
 public class GameDirector : MonoBehaviour
 {
     TrumpController trumpController;
+
+    Button button;
+
+    [SerializeField]
+    GameObject playerGameObject;
+
+    [SerializeField]
+    GameObject dealerGameObject;
+
     // Start is called before the first frame update
     void Start()
     {
-        Button button = GetComponent<Button>();
-
         trumpController = GetComponent<TrumpController>();
+        button = GetComponent<Button>();
 
         SpriteRenderer[] playerCards =
-            GetComponentsInChildren<SpriteRenderer>().ToArray();
+            playerGameObject.GetComponentsInChildren<SpriteRenderer>().ToArray();
         SpriteRenderer[] dealerCards =
-            GetComponentsInChildren<SpriteRenderer>().ToArray();
+            dealerGameObject.GetComponentsInChildren<SpriteRenderer>().ToArray();
+
+        playerCards[0].sprite = trumpController.DrawCard().Sprite;
     }
 
     // Update is called once per frame

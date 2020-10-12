@@ -18,8 +18,8 @@ public class CharacterBase : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        nameText.text = characterName;
-        scoreText.text = "---";
+        // nameText.text = characterName;
+        // scoreText.text = "---";
     }
 
     // Update is called once per frame
