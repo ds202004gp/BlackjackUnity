@@ -13,7 +13,9 @@ public class CharacterBase : MonoBehaviour
     Text scoreText;
     protected int characterScore;
 
-    protected List<int> drawCards = new List<int>();
+    protected List<Card> drawCards = new List<Card>();
+
+    protected SpriteRenderer[] characterCards;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -21,10 +23,16 @@ public class CharacterBase : MonoBehaviour
         // nameText.text = characterName;
         // scoreText.text = "---";
     }
-
-    // Update is called once per frame
-    void Update()
+    public virtual void AddDrawCards(Card card)
     {
+        drawCards.Add(card);
+    }
 
+    public virtual void ShowDrawCards()
+    {
+        for (int i = 0; i < drawCards.Count; i++)
+        {
+            characterCards[i].sprite = drawCards[i].Sprite;
+        }
     }
 }

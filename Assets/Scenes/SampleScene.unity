@@ -299,6 +299,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 363bbf10098118840b2705331dc9fb5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startButton: {fileID: 915555957}
+  playerGameObject: {fileID: 1761747840}
+  dealerGameObject: {fileID: 1501686711}
 --- !u!4 &426998836
 Transform:
   m_ObjectHideFlags: 0
@@ -406,7 +409,6 @@ GameObject:
   m_Component:
   - component: {fileID: 543697997}
   - component: {fileID: 543697996}
-  - component: {fileID: 543697995}
   m_Layer: 0
   m_Name: Card1
   m_TagString: Untagged
@@ -414,19 +416,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &543697995
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 543697994}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a04f249b872d6b429970789f1802066, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  trump: []
 --- !u!212 &543697996
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -765,7 +754,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1337715360}
   - component: {fileID: 1337715362}
-  - component: {fileID: 1337715361}
   m_Layer: 0
   m_Name: Card2
   m_TagString: Untagged
@@ -787,19 +775,6 @@ Transform:
   m_Father: {fileID: 1501686712}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1337715361
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1337715359}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a04f249b872d6b429970789f1802066, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  trump: []
 --- !u!212 &1337715362
 SpriteRenderer:
   m_ObjectHideFlags: 0

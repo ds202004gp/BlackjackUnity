@@ -6,9 +6,14 @@ using UnityEngine.UI;
 
 public class GameDirector : MonoBehaviour
 {
-    TrumpController trumpController;
+    [SerializeField]
+    Button startButton;
 
-    Button button;
+    [SerializeField]
+    Button stayButton;
+
+    [SerializeField]
+    GameObject playerButtons;
 
     [SerializeField]
     GameObject playerGameObject;
@@ -16,22 +21,44 @@ public class GameDirector : MonoBehaviour
     [SerializeField]
     GameObject dealerGameObject;
 
+    PlayerController playerController;
+
+    DealerController dealerController;
+
+    TrumpController trumpController;
+
+    SpriteRenderer[] characterCards;
+
+
     // Start is called before the first frame update
     void Start()
     {
         trumpController = GetComponent<TrumpController>();
-        button = GetComponent<Button>();
+        playerController = playerGameObject.GetComponent<PlayerController>();
+        dealerController = dealerGameObject.GetComponent<DealerController>();
+        characterCards = playerGameObject.GetComponentsInChildren<SpriteRenderer>().ToArray();
 
-        SpriteRenderer[] playerCards =
-            playerGameObject.GetComponentsInChildren<SpriteRenderer>().ToArray();
-        SpriteRenderer[] dealerCards =
-            dealerGameObject.GetComponentsInChildren<SpriteRenderer>().ToArray();
+        startButton.onClick.AddListener(GameStart);
+        stayButton.onClick.AddListener(Stay);
 
-        playerCards[0].sprite = trumpController.DrawCard().Sprite;
+        stayButton.gameObject.SetActive(false);
+        playerButtons.SetActive(false);
     }
+    void GameStart()
+    {
+        for (int i = 0; i < characterCards.Length; i++)
+        {
+            playerController.AddDrawCards(trumpController.DrawCard());
+            dealerController.AddDrawCards(trumpController.DrawCard());
+        }
+        playerController.ShowDrawCards();
+        dealerController.ShowDrawCards();
 
-    // Update is called once per frame
-    void Update()
+        startButton.gameObject.SetActive(false);
+        stayButton.gameObject.SetActive(true);
+        playerButtons.SetActive(true);
+    }
+    void Stay()
     {
 
     }

@@ -27,7 +27,7 @@ public class TrumpController : MonoBehaviour
         Debug.Log(playingCards.Count);
     }
 
-    public void CreateCards()
+    void CreateCards()
     {
         for (int i = 1; i < trump.Length; i++)
         {
@@ -50,7 +50,7 @@ public class TrumpController : MonoBehaviour
         }
     }
 
-    public void ShuffleCards()
+    void ShuffleCards()
     {
         while (orderCards.Count != 0)
         {
