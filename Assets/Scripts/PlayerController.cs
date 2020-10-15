@@ -8,10 +8,33 @@ public class PlayerController : CharacterBase
     // Start is called before the first frame update
     protected override void Start()
     {
-        characterName = "PLAYER";
         base.Start();
 
-        characterCards =
+        characterCardSprites =
             GetComponentsInChildren<SpriteRenderer>().ToArray();
+    }
+    public override void GameStart()
+    {
+        base.GameStart();
+        ShowCharacterCards();
+        ShowCharacterScore();
+    }
+    public void Hit()
+    {
+        AddCharacterCards(trumpController.DrawCard());
+        ShowCharacterCards();
+        ShowCharacterScore();
+    }
+    public void DoubleDown()
+    {
+
+    }
+    public void Surrender()
+    {
+
+    }
+    public void Stand()
+    {
+
     }
 }

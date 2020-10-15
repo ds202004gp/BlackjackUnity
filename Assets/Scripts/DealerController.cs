@@ -8,14 +8,20 @@ public class DealerController : CharacterBase
     // Start is called before the first frame update
     protected override void Start()
     {
-        characterName = "DEALER";
         base.Start();
 
-        characterCards =
+        characterCardSprites =
              GetComponentsInChildren<SpriteRenderer>().ToArray();
     }
-    public override void ShowDrawCards()
+    public override void GameStart()
     {
-        characterCards[0].sprite = drawCards[0].Sprite;
+        base.GameStart();
+        UpCard();
+    }
+    void UpCard()
+    {
+        characterCardSprites[0].sprite = characterCards[0].Sprite;
+        characterScore = characterCards[0].Number;
+        scoreText.text = characterScore.ToString();
     }
 }
