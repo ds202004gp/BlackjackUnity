@@ -10,25 +10,29 @@ public class TrumpController : MonoBehaviour
     [SerializeField]
     Sprite[] trump;
 
-    List<Card> orderCards = new List<Card>();
-    Stack<Card> playingCards = new Stack<Card>();
+    public Sprite back;
 
-    void Start()
+    List<Card> orderCards;
+    Stack<Card> playingCards;
+
+    public void ResetCardsInfo()
     {
         CreateCards();
-
         ShuffleCards();
-
+        /*
         foreach (var item in playingCards)
         {
             Debug.Log($"{item.Suit} {item.Number} {item.Sprite}");
         }
 
         Debug.Log(playingCards.Count);
+        */
     }
 
     void CreateCards()
     {
+        orderCards = new List<Card>();
+
         for (int i = 1; i < trump.Length; i++)
         {
             if (i < 14)
@@ -52,6 +56,8 @@ public class TrumpController : MonoBehaviour
 
     void ShuffleCards()
     {
+        playingCards = new Stack<Card>();
+
         while (orderCards.Count != 0)
         {
             int rand = Random.Range(0, orderCards.Count);
@@ -62,7 +68,20 @@ public class TrumpController : MonoBehaviour
 
     public Card DrawCard()
     {
-        return playingCards.Pop();
+        Card drawCard = playingCards.Pop();
+        ConvertNumberForBlackjack(drawCard);
+        return drawCard;
+    }
+    void ConvertNumberForBlackjack(Card card)
+    {
+        if (card.Number == 1)
+        {
+            card.Number = 11;
+        }
+        else if (card.Number > 10)
+        {
+            card.Number = 10;
+        }
     }
 }
 

@@ -5,14 +5,6 @@ using UnityEngine;
 
 public class DealerController : CharacterBase
 {
-    // Start is called before the first frame update
-    protected override void Start()
-    {
-        base.Start();
-
-        characterCardSprites =
-             GetComponentsInChildren<SpriteRenderer>().ToArray();
-    }
     public override void GameStart()
     {
         base.GameStart();
@@ -23,5 +15,23 @@ public class DealerController : CharacterBase
         characterCardSprites[0].sprite = characterCards[0].Sprite;
         characterScore = characterCards[0].Number;
         scoreText.text = characterScore.ToString();
+    }
+    public void DrawDealer()
+    {
+        while (true)
+        {
+            ShowCharacterCards();
+            ShowCharacterScore();
+
+            if (characterScore < 17)
+            {
+                AddCharacterCards(trumpController.DrawCard());
+            }
+            else
+            {
+                break;
+            }
+        }
+        gameDirector.Judgement();
     }
 }

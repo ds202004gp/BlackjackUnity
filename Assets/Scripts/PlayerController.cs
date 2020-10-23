@@ -5,14 +5,6 @@ using UnityEngine;
 
 public class PlayerController : CharacterBase
 {
-    // Start is called before the first frame update
-    protected override void Start()
-    {
-        base.Start();
-
-        characterCardSprites =
-            GetComponentsInChildren<SpriteRenderer>().ToArray();
-    }
     public override void GameStart()
     {
         base.GameStart();
@@ -30,10 +22,6 @@ public class PlayerController : CharacterBase
 
     }
     public void Surrender()
-    {
-
-    }
-    public void Stand()
     {
 
     }

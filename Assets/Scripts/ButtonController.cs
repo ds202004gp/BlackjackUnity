@@ -12,6 +12,9 @@ public class ButtonController : MonoBehaviour
     Button standButton;
 
     [SerializeField]
+    Button retryButton;
+
+    [SerializeField]
     Button hitButton;
 
     [SerializeField]
@@ -34,6 +37,7 @@ public class ButtonController : MonoBehaviour
     {
         startButton.onClick.AddListener(StartButton);
         standButton.onClick.AddListener(StandButton);
+        retryButton.onClick.AddListener(RetryButton);
         hitButton.onClick.AddListener(HitButton);
         doubleDownButton.onClick.AddListener(DoubleDownButton);
         surrenderButton.onClick.AddListener(SurrenderButton);
@@ -44,7 +48,11 @@ public class ButtonController : MonoBehaviour
     }
     void StandButton()
     {
-        playerController.Stand();
+        gameDirector.Stand();
+    }
+    void RetryButton()
+    {
+        gameDirector.ResetField();
     }
     void HitButton()
     {

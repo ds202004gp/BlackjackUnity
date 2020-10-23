@@ -7,50 +7,61 @@ using UnityEngine.UI;
 public class GameDirector : MonoBehaviour
 {
     [SerializeField]
-    Button startButton;
+    GameObject startButton;
 
     [SerializeField]
-    Button stayButton;
+    GameObject standButton;
+
+    [SerializeField]
+    GameObject retryButton;
 
     [SerializeField]
     GameObject playerButtons;
 
     [SerializeField]
-    GameObject playerGameObject;
-
-    [SerializeField]
-    GameObject dealerGameObject;
-
     PlayerController playerController;
 
+    [SerializeField]
     DealerController dealerController;
 
     TrumpController trumpController;
-
-    SpriteRenderer[] characterCards;
-
-
     // Start is called before the first frame update
     void Start()
     {
         trumpController = GetComponent<TrumpController>();
-        playerController = playerGameObject.GetComponent<PlayerController>();
-        dealerController = dealerGameObject.GetComponent<DealerController>();
-        characterCards = playerGameObject.GetComponentsInChildren<SpriteRenderer>().ToArray();
-
-        stayButton.gameObject.SetActive(false);
-        playerButtons.SetActive(false);
+        ResetField();
     }
     public void GameStart()
     {
         playerController.GameStart();
         dealerController.GameStart();
 
-        startButton.gameObject.SetActive(false);
-        stayButton.gameObject.SetActive(true);
+        startButton.SetActive(false);
+        standButton.SetActive(true);
+        retryButton.SetActive(false);
         playerButtons.SetActive(true);
     }
-    void Stay()
+    public void Stand()
+    {
+        dealerController.DrawDealer();
+
+        startButton.SetActive(false);
+        standButton.SetActive(false);
+        retryButton.SetActive(true);
+        playerButtons.SetActive(false);
+    }
+    public void ResetField()
+    {
+        startButton.SetActive(true);
+        standButton.SetActive(false);
+        retryButton.SetActive(false);
+        playerButtons.SetActive(false);
+
+        trumpController.ResetCardsInfo();
+        playerController.ResetCardsInfo();
+        dealerController.ResetCardsInfo();
+    }
+    public void Judgement()
     {
 
     }
