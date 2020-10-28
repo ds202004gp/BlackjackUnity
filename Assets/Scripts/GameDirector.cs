@@ -19,6 +19,9 @@ public class GameDirector : MonoBehaviour
     GameObject playerButtons;
 
     [SerializeField]
+    Text JudgementText;
+
+    [SerializeField]
     PlayerController playerController;
 
     [SerializeField]

@@ -22,6 +22,8 @@ public class CharacterBase : MonoBehaviour
 
     protected List<Card> characterCards;
     protected List<SpriteRenderer> characterCardSprites;
+    protected bool isBlackjack;
+    protected bool isBust;
 
     [SerializeField]
     SpriteRenderer cardPrefab;
@@ -34,6 +36,10 @@ public class CharacterBase : MonoBehaviour
     {
         gameDirector = gameDirectorObject.GetComponent<GameDirector>();
         trumpController = gameDirectorObject.GetComponent<TrumpController>();
+
+        characterCardSprites = new List<SpriteRenderer>();
+        characterCardSprites =
+            GetComponentsInChildren<SpriteRenderer>().ToList();
     }
     public virtual void GameStart()
     {
@@ -42,13 +48,11 @@ public class CharacterBase : MonoBehaviour
     }
     public void ResetCardsInfo()
     {
-        characterScore = 0;
+        isBlackjack = false;
+        isBust = false;
         characterCards = new List<Card>();
-        characterCardSprites = new List<SpriteRenderer>();
-        characterCardSprites =
-            GetComponentsInChildren<SpriteRenderer>().ToList();
-
-        CharacterCardSpritesRemove();
+        ShowCharacterScore();
+        CharacterCardSpritesReset();
 
         for (int i = 0; i < characterCardSprites.Count; i++)
         {
@@ -56,7 +60,7 @@ public class CharacterBase : MonoBehaviour
         }
 
     }
-    void CharacterCardSpritesRemove()
+    void CharacterCardSpritesReset()
     {
         for (int i = 2; i < characterCardSprites.Count; i++)
         {
@@ -117,14 +121,15 @@ public class CharacterBase : MonoBehaviour
     }
     protected void ShowCharacterScore()
     {
-        bool isBlackJack = CharacterScoreSum();
+        isBlackjack = CharacterScoreSum();
 
-        if (isBlackJack)
+        if (isBlackjack)
         {
             scoreText.text = "BLACKJACK!";
         }
         else if (characterScore > 21)
         {
+            isBust = true;
             scoreText.text = "BUST!";
         }
         else
