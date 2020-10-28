@@ -1,0 +1,97 @@
+@startuml
+class ButtonController {
+    Start() : void
+    StartButton() : void
+    StandButton() : void
+    RetryButton() : void
+    HitButton() : void
+    DoubleDownButton() : void
+    SurrenderButton() : void
+}
+MonoBehaviour <|-- ButtonController
+ButtonController --> "startButton" Button
+ButtonController --> "standButton" Button
+ButtonController --> "retryButton" Button
+ButtonController --> "hitButton" Button
+ButtonController --> "doubleDownButton" Button
+ButtonController --> "surrenderButton" Button
+ButtonController --> "gameDirector" GameDirector
+ButtonController --> "playerController" PlayerController
+ButtonController --> "dealerController" DealerController
+class CharacterBase {
+    direction : float
+    + <<virtual>> GameStart() : void
+    + ResetCardsInfo() : void
+    CharacterCardSpritesRemove() : void
+    CharacterCardSpritesAdd(cardPos:Vector2) : void
+    CharacterScoreSum() : bool
+}
+MonoBehaviour <|-- CharacterBase
+CharacterBase --> "characterTransform" Transform
+CharacterBase --> "gameDirectorObject" GameObject
+CharacterBase --> "cardPrefab" SpriteRenderer
+class DealerController {
+    + <<override>> GameStart() : void
+    UpCard() : void
+    + DrawDealer() : void
+}
+CharacterBase <|-- DealerController
+class GameDirector {
+    Start() : void
+    + GameStart() : void
+    + Stand() : void
+    + ResetField() : void
+    + Judgement() : void
+}
+MonoBehaviour <|-- GameDirector
+GameDirector --> "startButton" GameObject
+GameDirector --> "standButton" GameObject
+GameDirector --> "retryButton" GameObject
+GameDirector --> "playerButtons" GameObject
+GameDirector --> "playerController" PlayerController
+GameDirector --> "dealerController" DealerController
+GameDirector --> "trumpController" TrumpController
+class PlayerController {
+    + <<override>> GameStart() : void
+    + Hit() : void
+    + DoubleDown() : void
+    + Surrender() : void
+}
+CharacterBase <|-- PlayerController
+class TrumpController {
+    + ResetCardsInfo() : void
+    CreateCards() : void
+    ShuffleCards() : void
+    + DrawCard() : Card
+    ConvertNumberForBlackjack(card:Card) : void
+}
+class Card {
+    + Number : int <<get>> <<set>>
+    + Suit : string <<get>> <<set>>
+}
+class Hart {
+    + Hart(sprite:Sprite, number:int)
+}
+class Spade {
+    + Spade(sprite:Sprite, number:int)
+}
+class Clover {
+    + Clover(sprite:Sprite, number:int)
+}
+class Daia {
+    + Daia(sprite:Sprite, number:int)
+}
+class "List`1"<T> {
+}
+class "Stack`1"<T> {
+}
+MonoBehaviour <|-- TrumpController
+TrumpController --> "back" Sprite
+TrumpController --> "orderCards<Card>" "List`1"
+TrumpController --> "playingCards<Card>" "Stack`1"
+Card --> "Sprite" Sprite
+Card <|-- Hart
+Card <|-- Spade
+Card <|-- Clover
+Card <|-- Daia
+@enduml

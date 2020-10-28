@@ -60,7 +60,7 @@ public class CharacterBase : MonoBehaviour
     {
         for (int i = 2; i < characterCardSprites.Count; i++)
         {
-            Destroy(characterCardSprites[i].gameObject);
+            characterCardSprites[i].gameObject.SetActive(false);
         }
     }
     protected void AddCharacterCards(Card card)
@@ -77,6 +77,7 @@ public class CharacterBase : MonoBehaviour
         }
         for (int i = 0; i < characterCards.Count; i++)
         {
+            characterCardSprites[i].gameObject.SetActive(true);
             characterCardSprites[i].sprite = characterCards[i].Sprite;
         }
     }

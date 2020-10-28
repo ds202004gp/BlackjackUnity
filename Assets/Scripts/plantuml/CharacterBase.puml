@@ -1,0 +1,14 @@
+@startuml
+class CharacterBase {
+    direction : float
+    + <<virtual>> GameStart() : void
+    + ResetCardsInfo() : void
+    CharacterCardSpritesRemove() : void
+    CharacterCardSpritesAdd(cardPos:Vector2) : void
+    CharacterScoreSum() : bool
+}
+MonoBehaviour <|-- CharacterBase
+CharacterBase --> "characterTransform" Transform
+CharacterBase --> "gameDirectorObject" GameObject
+CharacterBase --> "cardPrefab" SpriteRenderer
+@enduml

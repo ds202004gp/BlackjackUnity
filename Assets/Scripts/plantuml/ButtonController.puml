@@ -1,0 +1,21 @@
+@startuml
+class ButtonController {
+    Start() : void
+    StartButton() : void
+    StandButton() : void
+    RetryButton() : void
+    HitButton() : void
+    DoubleDownButton() : void
+    SurrenderButton() : void
+}
+MonoBehaviour <|-- ButtonController
+ButtonController --> "startButton" Button
+ButtonController --> "standButton" Button
+ButtonController --> "retryButton" Button
+ButtonController --> "hitButton" Button
+ButtonController --> "doubleDownButton" Button
+ButtonController --> "surrenderButton" Button
+ButtonController --> "gameDirector" GameDirector
+ButtonController --> "playerController" PlayerController
+ButtonController --> "dealerController" DealerController
+@enduml

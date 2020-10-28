@@ -1,0 +1,38 @@
+@startuml
+class TrumpController {
+    + ResetCardsInfo() : void
+    CreateCards() : void
+    ShuffleCards() : void
+    + DrawCard() : Card
+    ConvertNumberForBlackjack(card:Card) : void
+}
+class Card {
+    + Number : int <<get>> <<set>>
+    + Suit : string <<get>> <<set>>
+}
+class Hart {
+    + Hart(sprite:Sprite, number:int)
+}
+class Spade {
+    + Spade(sprite:Sprite, number:int)
+}
+class Clover {
+    + Clover(sprite:Sprite, number:int)
+}
+class Daia {
+    + Daia(sprite:Sprite, number:int)
+}
+class "List`1"<T> {
+}
+class "Stack`1"<T> {
+}
+MonoBehaviour <|-- TrumpController
+TrumpController --> "back" Sprite
+TrumpController --> "orderCards<Card>" "List`1"
+TrumpController --> "playingCards<Card>" "Stack`1"
+Card --> "Sprite" Sprite
+Card <|-- Hart
+Card <|-- Spade
+Card <|-- Clover
+Card <|-- Daia
+@enduml
