@@ -19,7 +19,7 @@ public class GameDirector : MonoBehaviour
     GameObject playerButtons;
 
     [SerializeField]
-    Text JudgementText;
+    Text judgementText;
 
     [SerializeField]
     PlayerController playerController;
@@ -60,12 +60,43 @@ public class GameDirector : MonoBehaviour
         retryButton.SetActive(false);
         playerButtons.SetActive(false);
 
+        judgementText.gameObject.SetActive(false);
+
         trumpController.ResetCardsInfo();
         playerController.ResetCardsInfo();
         dealerController.ResetCardsInfo();
     }
     public void Judgement()
     {
+        judgementText.gameObject.SetActive(true);
 
+        int playerScore = playerController.GetScore();
+        int dealerScore = dealerController.GetScore();
+
+        if (playerScore > dealerScore)
+        {
+            judgementText.text = "WIN!";
+            judgementText.color = Color.yellow;
+        }
+        else if (playerScore < dealerScore)
+        {
+            judgementText.text = "LOSE...";
+            judgementText.color = Color.blue;
+        }
+        else if (playerScore == dealerScore)
+        {
+            judgementText.text = "DRAW";
+            judgementText.color = Color.white;
+        }
+    }
+    public void IsBust()
+    {
+        if (playerController.GetScore() == 0)
+        {
+            startButton.SetActive(false);
+            standButton.SetActive(true);
+            retryButton.SetActive(false);
+            playerButtons.SetActive(false);
+        }
     }
 }

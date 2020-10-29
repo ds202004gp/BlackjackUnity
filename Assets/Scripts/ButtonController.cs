@@ -57,10 +57,12 @@ public class ButtonController : MonoBehaviour
     void HitButton()
     {
         playerController.Hit();
+        gameDirector.IsBust();
     }
     void DoubleDownButton()
     {
         playerController.DoubleDown();
+        gameDirector.IsBust();
     }
     void SurrenderButton()
     {

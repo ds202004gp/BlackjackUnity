@@ -19,7 +19,7 @@ public class PlayerController : CharacterBase
     }
     public void DoubleDown()
     {
-
+        Hit();
     }
     public void Surrender()
     {
