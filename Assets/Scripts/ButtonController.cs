@@ -6,6 +6,12 @@ using UnityEngine.UI;
 public class ButtonController : MonoBehaviour
 {
     [SerializeField]
+    Button upButton;
+
+    [SerializeField]
+    Button downButton;
+
+    [SerializeField]
     Button startButton;
 
     [SerializeField]
@@ -35,12 +41,22 @@ public class ButtonController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        upButton.onClick.AddListener(UpButton);
+        downButton.onClick.AddListener(DownButton);
         startButton.onClick.AddListener(StartButton);
         standButton.onClick.AddListener(StandButton);
         retryButton.onClick.AddListener(RetryButton);
         hitButton.onClick.AddListener(HitButton);
         doubleDownButton.onClick.AddListener(DoubleDownButton);
         surrenderButton.onClick.AddListener(SurrenderButton);
+    }
+    void UpButton()
+    {
+        playerController.BetUpDown(true);
+    }
+    void DownButton()
+    {
+        playerController.BetUpDown(false);
     }
     void StartButton()
     {
@@ -57,12 +73,10 @@ public class ButtonController : MonoBehaviour
     void HitButton()
     {
         playerController.Hit();
-        gameDirector.IsBust();
     }
     void DoubleDownButton()
     {
         playerController.DoubleDown();
-        gameDirector.IsBust();
     }
     void SurrenderButton()
     {

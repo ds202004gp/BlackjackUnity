@@ -58,7 +58,6 @@ public class CharacterBase : MonoBehaviour
         {
             characterCardSprites[i].sprite = trumpController.back;
         }
-
     }
     void CharacterCardSpritesReset()
     {

@@ -19,7 +19,7 @@ public class GameDirector : MonoBehaviour
     GameObject playerButtons;
 
     [SerializeField]
-    Text judgementText;
+    GameObject betButtons;
 
     [SerializeField]
     PlayerController playerController;
@@ -27,15 +27,24 @@ public class GameDirector : MonoBehaviour
     [SerializeField]
     DealerController dealerController;
 
+    [SerializeField]
+    Text judgementText;
+
     TrumpController trumpController;
+
+    int bet;
+    public int Bet { get => bet; set => bet = value; }
+
     // Start is called before the first frame update
     void Start()
     {
         trumpController = GetComponent<TrumpController>();
         ResetField();
     }
+
     public void GameStart()
     {
+        Bet = 0;
         playerController.GameStart();
         dealerController.GameStart();
 
@@ -43,6 +52,7 @@ public class GameDirector : MonoBehaviour
         standButton.SetActive(true);
         retryButton.SetActive(false);
         playerButtons.SetActive(true);
+        betButtons.SetActive(false);
     }
     public void Stand()
     {
@@ -59,15 +69,22 @@ public class GameDirector : MonoBehaviour
         standButton.SetActive(false);
         retryButton.SetActive(false);
         playerButtons.SetActive(false);
+        betButtons.SetActive(true);
 
         judgementText.gameObject.SetActive(false);
 
         trumpController.ResetCardsInfo();
         playerController.ResetCardsInfo();
         dealerController.ResetCardsInfo();
+
+        playerController.ShowMoney();
     }
+
+    bool isWin;
     public void Judgement()
     {
+        isWin = false;
+
         judgementText.gameObject.SetActive(true);
 
         int playerScore = playerController.GetScore();
@@ -77,26 +94,40 @@ public class GameDirector : MonoBehaviour
         {
             judgementText.text = "WIN!";
             judgementText.color = Color.yellow;
+            isWin = true;
+            Dividend(Bet);
+        }
+        else if (playerScore == dealerScore)
+        {
+            judgementText.text = "DRAW";
+            judgementText.color = Color.white;
+            Dividend(bet);
         }
         else if (playerScore < dealerScore)
         {
             judgementText.text = "LOSE...";
             judgementText.color = Color.blue;
         }
-        else if (playerScore == dealerScore)
+    }
+
+    void Dividend(int dividend)
+    {
+        if (isWin)
         {
-            judgementText.text = "DRAW";
-            judgementText.color = Color.white;
+            dividend *= 2;
+            playerController.Money += dividend;
+        }
+        else
+        {
+            playerController.Money += dividend;
         }
     }
-    public void IsBust()
+
+    public void StandButtonOnly()
     {
-        if (playerController.GetScore() == 0)
-        {
-            startButton.SetActive(false);
-            standButton.SetActive(true);
-            retryButton.SetActive(false);
-            playerButtons.SetActive(false);
-        }
+        startButton.SetActive(false);
+        standButton.SetActive(true);
+        retryButton.SetActive(false);
+        playerButtons.SetActive(false);
     }
 }
