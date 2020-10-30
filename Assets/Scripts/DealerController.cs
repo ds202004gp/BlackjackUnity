@@ -32,6 +32,5 @@ public class DealerController : CharacterBase
                 break;
             }
         }
-        gameDirector.Judgement();
     }
 }

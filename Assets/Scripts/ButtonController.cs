@@ -1,10 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ButtonController : MonoBehaviour
 {
+    [SerializeField]
+    Button gotoTitleButton;
+
     [SerializeField]
     Button upButton;
 
@@ -41,6 +45,7 @@ public class ButtonController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gotoTitleButton.onClick.AddListener(GotoTitleButton);
         upButton.onClick.AddListener(UpButton);
         downButton.onClick.AddListener(DownButton);
         startButton.onClick.AddListener(StartButton);
@@ -49,6 +54,10 @@ public class ButtonController : MonoBehaviour
         hitButton.onClick.AddListener(HitButton);
         doubleDownButton.onClick.AddListener(DoubleDownButton);
         surrenderButton.onClick.AddListener(SurrenderButton);
+    }
+    void GotoTitleButton()
+    {
+        SceneManager.LoadScene("TitleScene");
     }
     void UpButton()
     {

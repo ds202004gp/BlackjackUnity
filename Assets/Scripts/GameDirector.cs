@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -22,6 +23,9 @@ public class GameDirector : MonoBehaviour
     GameObject betButtons;
 
     [SerializeField]
+    GameObject gameOverPanel;
+
+    [SerializeField]
     PlayerController playerController;
 
     [SerializeField]
@@ -38,6 +42,7 @@ public class GameDirector : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameOverPanel.SetActive(false);
         trumpController = GetComponent<TrumpController>();
         ResetField();
     }
@@ -57,11 +62,34 @@ public class GameDirector : MonoBehaviour
     public void Stand()
     {
         dealerController.DrawDealer();
+        Judgement();
+
+        if (IsGameFollow())
+        {
+            startButton.SetActive(false);
+            standButton.SetActive(false);
+            retryButton.SetActive(true);
+            playerButtons.SetActive(false);
+        }
+        else
+        {
+            GameOver();
+        }
+    }
+
+    bool IsGameFollow()
+    {
+        return !(playerController.Money <= 0 && isLose);
+    }
+    void GameOver()
+    {
+        gameOverPanel.SetActive(true);
 
         startButton.SetActive(false);
         standButton.SetActive(false);
-        retryButton.SetActive(true);
+        retryButton.SetActive(false);
         playerButtons.SetActive(false);
+        betButtons.SetActive(false);
     }
     public void ResetField()
     {
@@ -87,7 +115,7 @@ public class GameDirector : MonoBehaviour
     bool isWin;
     bool isDraw;
     bool isLose;
-    public void Judgement()
+    void Judgement()
     {
         judgementText.gameObject.SetActive(true);
 
@@ -103,7 +131,7 @@ public class GameDirector : MonoBehaviour
         else if (playerScore == dealerScore)
         {
             judgementText.text = "DRAW";
-            judgementText.color = Color.white;
+            judgementText.color = Color.grey;
             isDraw = true;
         }
         else if (playerScore < dealerScore)
@@ -118,8 +146,16 @@ public class GameDirector : MonoBehaviour
     {
         if (isWin)
         {
-            dividend *= 2;
-            playerController.Money += dividend;
+            if (playerController.IsBlackjack)
+            {
+                dividend = (int)(dividend * 2.5);
+                playerController.Money += dividend;
+            }
+            else
+            {
+                dividend *= 2;
+                playerController.Money += dividend;
+            }
         }
         else if (isDraw)
         {

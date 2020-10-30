@@ -7,6 +7,9 @@ using UnityEngine.UI;
 public class CharacterBase : MonoBehaviour
 {
     [SerializeField]
+    protected GameObject blackjackText;
+
+    [SerializeField]
     Transform characterTransform;
 
     [SerializeField]
@@ -22,8 +25,6 @@ public class CharacterBase : MonoBehaviour
 
     protected List<Card> characterCards;
     protected List<SpriteRenderer> characterCardSprites;
-    protected bool isBlackjack;
-    protected bool isBust;
 
     [SerializeField]
     SpriteRenderer cardPrefab;
@@ -48,8 +49,9 @@ public class CharacterBase : MonoBehaviour
     }
     public void ResetCardsInfo()
     {
-        isBlackjack = false;
+        IsBlackjack = false;
         isBust = false;
+        blackjackText.SetActive(false);
         characterCards = new List<Card>();
         ShowCharacterScore();
         CharacterCardSpritesReset();
@@ -118,13 +120,20 @@ public class CharacterBase : MonoBehaviour
         characterScore = score;
         return score == 21 && characterCards.Count == 2;
     }
+
+    private bool isBlackjack;
+    public bool IsBlackjack { get => isBlackjack; set => isBlackjack = value; }
+
+    protected bool isBust;
+
     protected void ShowCharacterScore()
     {
-        isBlackjack = CharacterScoreSum();
+        IsBlackjack = CharacterScoreSum();
 
-        if (isBlackjack)
+        if (IsBlackjack)
         {
-            scoreText.text = "BLACKJACK!";
+            blackjackText.SetActive(true);
+            scoreText.text = $"{characterScore}";
         }
         else if (characterScore > 21)
         {
@@ -133,12 +142,12 @@ public class CharacterBase : MonoBehaviour
         }
         else
         {
-            scoreText.text = characterScore.ToString();
+            scoreText.text = $"{characterScore}";
         }
     }
     public int GetScore()
     {
-        if (isBlackjack)
+        if (IsBlackjack)
         {
             return 22;
         }
