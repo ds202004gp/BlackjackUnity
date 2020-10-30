@@ -65,6 +65,12 @@ public class GameDirector : MonoBehaviour
     }
     public void ResetField()
     {
+        Dividend(Bet);
+
+        isWin = false;
+        isDraw = false;
+        isLose = false;
+
         startButton.SetActive(true);
         standButton.SetActive(false);
         retryButton.SetActive(false);
@@ -76,15 +82,13 @@ public class GameDirector : MonoBehaviour
         trumpController.ResetCardsInfo();
         playerController.ResetCardsInfo();
         dealerController.ResetCardsInfo();
-
-        playerController.ShowMoney();
     }
 
     bool isWin;
+    bool isDraw;
+    bool isLose;
     public void Judgement()
     {
-        isWin = false;
-
         judgementText.gameObject.SetActive(true);
 
         int playerScore = playerController.GetScore();
@@ -95,18 +99,18 @@ public class GameDirector : MonoBehaviour
             judgementText.text = "WIN!";
             judgementText.color = Color.yellow;
             isWin = true;
-            Dividend(Bet);
         }
         else if (playerScore == dealerScore)
         {
             judgementText.text = "DRAW";
             judgementText.color = Color.white;
-            Dividend(bet);
+            isDraw = true;
         }
         else if (playerScore < dealerScore)
         {
             judgementText.text = "LOSE...";
             judgementText.color = Color.blue;
+            isLose = true;
         }
     }
 
@@ -117,8 +121,17 @@ public class GameDirector : MonoBehaviour
             dividend *= 2;
             playerController.Money += dividend;
         }
+        else if (isDraw)
+        {
+            playerController.Money += dividend;
+        }
+        else if (isLose)
+        {
+            return;
+        }
         else
         {
+            dividend /= 2;
             playerController.Money += dividend;
         }
     }

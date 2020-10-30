@@ -10,7 +10,16 @@ public class PlayerController : CharacterBase
     Text moneyText;
     int money;
 
-    public int Money { get => money; set => money = value; }
+    public int Money
+    {
+        get => money;
+
+        set
+        {
+            money = value;
+            moneyText.text = Money.ToString();
+        }
+    }
 
     [SerializeField]
     Text betText;
@@ -54,22 +63,24 @@ public class PlayerController : CharacterBase
     {
         if (IsUpDown)
         {
-            bet += 500;
+            if (bet < 5000)
+            {
+                bet += 500;
+            }
         }
         else
         {
-            bet -= 500;
+            if (bet > 500)
+            {
+                bet -= 500;
+            }
         }
         betText.text = bet.ToString();
+
     }
     void ThrowBet()
     {
         Money -= bet;
         gameDirector.Bet += bet;
-        ShowMoney();
-    }
-    public void ShowMoney()
-    {
-        moneyText.text = Money.ToString();
     }
 }
