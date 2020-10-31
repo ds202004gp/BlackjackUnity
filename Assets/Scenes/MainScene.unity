@@ -279,10 +279,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 20
+    m_FontSize: 1
     m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 2
+    m_MinSize: 0
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -452,7 +452,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 60, y: 10}
+  m_AnchoredPosition: {x: 70, y: 10}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &402973563
@@ -680,6 +680,8 @@ MonoBehaviour:
   playerController: {fileID: 1761747842}
   dealerController: {fileID: 1501686713}
   judgementText: {fileID: 1793123173}
+  maxBet: 500
+  minBet: 50
 --- !u!4 &426998836
 Transform:
   m_ObjectHideFlags: 0
@@ -786,7 +788,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &469552753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1092,11 +1094,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 20
+    m_FontSize: 1
     m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 2
-    m_MaxSize: 40
+    m_MinSize: 0
+    m_MaxSize: 300
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -1355,11 +1357,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 20
+    m_FontSize: 1
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 40
+    m_MaxSize: 225
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -1433,10 +1435,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 20
+    m_FontSize: 1
     m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 2
+    m_MinSize: 1
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -2056,7 +2058,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 17
+    m_FontSize: 18
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -2265,7 +2267,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: $100
+  m_Text: 
 --- !u!222 &1318450882
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2347,11 +2349,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 17
+    m_FontSize: 18
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 1
-    m_MaxSize: 40
+    m_MinSize: 0
+    m_MaxSize: 119
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -2629,7 +2631,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 30
+    m_FontSize: 35
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 3
@@ -3089,7 +3091,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42bf4425977d08848a61c07fac5c5345, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blackjackText: {fileID: 1565686616}
+  blackjackOrBust: {fileID: 1565686619}
   characterTransform: {fileID: 1501686712}
   gameDirectorObject: {fileID: 426998832}
   scoreText: {fileID: 1080774730}
@@ -3461,10 +3463,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 20
+    m_FontSize: 1
     m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 2
+    m_MinSize: 1
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -3734,10 +3736,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 20
+    m_FontSize: 1
     m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 2
+    m_MinSize: 0
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -3799,7 +3801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cdd94402eaece749946d292484d7c8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blackjackText: {fileID: 402973563}
+  blackjackOrBust: {fileID: 402973566}
   characterTransform: {fileID: 1761747841}
   gameDirectorObject: {fileID: 426998832}
   scoreText: {fileID: 1147341598}
@@ -3807,10 +3809,9 @@ MonoBehaviour:
     type: 3}
   direction: 0.5
   moneyText: {fileID: 270666483}
-  money: 10000
+  money: 1000
   betText: {fileID: 1318450881}
-  maxBet: 1000
-  minBet: 50
+  bet: 100
 --- !u!1 &1793123171
 GameObject:
   m_ObjectHideFlags: 0
@@ -3830,7 +3831,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1793123172
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3882,7 +3883,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: JUDGEMENT
+  m_Text: DRAW
 --- !u!222 &1793123174
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3979,10 +3980,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 20
+    m_FontSize: 1
     m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 2
+    m_MinSize: 1
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0

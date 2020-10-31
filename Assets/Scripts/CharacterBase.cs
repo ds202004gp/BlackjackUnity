@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class CharacterBase : MonoBehaviour
 {
     [SerializeField]
-    protected GameObject blackjackText;
+    protected Text blackjackOrBust;
 
     [SerializeField]
     Transform characterTransform;
@@ -47,11 +47,11 @@ public class CharacterBase : MonoBehaviour
         AddCharacterCards(trumpController.DrawCard());
         AddCharacterCards(trumpController.DrawCard());
     }
-    public void ResetCardsInfo()
+    public virtual void ResetCardsInfo()
     {
         IsBlackjack = false;
         isBust = false;
-        blackjackText.SetActive(false);
+        blackjackOrBust.text = "";
         characterCards = new List<Card>();
         ShowCharacterScore();
         CharacterCardSpritesReset();
@@ -132,18 +132,16 @@ public class CharacterBase : MonoBehaviour
 
         if (IsBlackjack)
         {
-            blackjackText.SetActive(true);
-            scoreText.text = $"{characterScore}";
+            blackjackOrBust.text = "BLACKJACK!!";
+            blackjackOrBust.color = Color.yellow;
         }
         else if (characterScore > 21)
         {
+            blackjackOrBust.text = "BUST...";
+            blackjackOrBust.color = Color.blue;
             isBust = true;
-            scoreText.text = "BUST!";
         }
-        else
-        {
-            scoreText.text = $"{characterScore}";
-        }
+        scoreText.text = $"{characterScore}";
     }
     public int GetScore()
     {

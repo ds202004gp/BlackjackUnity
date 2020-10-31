@@ -15,10 +15,9 @@ public class PlayerController : CharacterBase
     public int Money
     {
         get => money;
-
         set
         {
-            if (money > 0)
+            if (0 <= value)
             {
                 money = value;
                 moneyText.text = $"${money:n0}";
@@ -29,14 +28,15 @@ public class PlayerController : CharacterBase
     [SerializeField]
     Text betText;
 
-    [SerializeField]
-    int maxBet = 1000;
+    int maxBet;
+    public int MaxBet { set => maxBet = value; }
+
+    int minBet;
+    public int MinBet { set => minBet = value; }
 
     [SerializeField]
-    int minBet = 50;
-
-    int bet = 100;
-    public int Bet
+    int bet;
+    int Bet
     {
         get => bet;
         set
@@ -46,12 +46,27 @@ public class PlayerController : CharacterBase
         }
     }
 
+    protected override void Awake()
+    {
+        base.Awake();
+        Bet = bet;
+        Money = money;
+    }
     public override void GameStart()
     {
         base.GameStart();
         ThrowBet();
         ShowCharacterCards();
         ShowCharacterScore();
+    }
+    public override void ResetCardsInfo()
+    {
+        base.ResetCardsInfo();
+
+        while (money < bet)
+        {
+            Bet -= minBet;
+        }
     }
     public void Hit()
     {
@@ -78,14 +93,14 @@ public class PlayerController : CharacterBase
     {
         if (IsUpDown)
         {
-            if (Bet < Mathf.Min(Money, maxBet))
+            if (bet + minBet <= Mathf.Min(money, maxBet))
             {
                 Bet += minBet;
             }
         }
         else
         {
-            if (Bet > minBet)
+            if (bet > minBet)
             {
                 Bet -= minBet;
             }
@@ -93,7 +108,7 @@ public class PlayerController : CharacterBase
     }
     void ThrowBet()
     {
-        Money -= Bet;
-        gameDirector.Bet += Bet;
+        Money -= bet;
+        gameDirector.Bet += bet;
     }
 }

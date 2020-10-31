@@ -34,6 +34,27 @@ public class GameDirector : MonoBehaviour
     [SerializeField]
     Text judgementText;
 
+    [SerializeField]
+    int maxBet;
+    int MaxBet
+    {
+        set
+        {
+            maxBet = value;
+            playerController.MaxBet = value;
+        }
+    }
+
+    [SerializeField]
+    int minBet;
+    int MinBet
+    {
+        set
+        {
+            minBet = value;
+            playerController.MinBet = value;
+        }
+    }
     TrumpController trumpController;
 
     int bet;
@@ -43,13 +64,15 @@ public class GameDirector : MonoBehaviour
     void Start()
     {
         gameOverPanel.SetActive(false);
+        MaxBet = maxBet;
+        MinBet = minBet;
         trumpController = GetComponent<TrumpController>();
         ResetField();
     }
 
     public void GameStart()
     {
-        Bet = 0;
+        bet = 0;
         playerController.GameStart();
         dealerController.GameStart();
 
@@ -79,7 +102,7 @@ public class GameDirector : MonoBehaviour
 
     bool IsGameFollow()
     {
-        return !(playerController.Money <= 0 && isLose);
+        return !(playerController.Money < minBet && isLose);
     }
     void GameOver()
     {
@@ -93,7 +116,7 @@ public class GameDirector : MonoBehaviour
     }
     public void ResetField()
     {
-        Dividend(Bet);
+        Dividend(bet);
 
         isWin = false;
         isDraw = false;
@@ -105,7 +128,7 @@ public class GameDirector : MonoBehaviour
         playerButtons.SetActive(false);
         betButtons.SetActive(true);
 
-        judgementText.gameObject.SetActive(false);
+        judgementText.text = "";
 
         trumpController.ResetCardsInfo();
         playerController.ResetCardsInfo();
@@ -117,14 +140,12 @@ public class GameDirector : MonoBehaviour
     bool isLose;
     void Judgement()
     {
-        judgementText.gameObject.SetActive(true);
-
         int playerScore = playerController.GetScore();
         int dealerScore = dealerController.GetScore();
 
         if (playerScore > dealerScore)
         {
-            judgementText.text = "WIN!";
+            judgementText.text = "WIN!!";
             judgementText.color = Color.yellow;
             isWin = true;
         }
@@ -142,23 +163,26 @@ public class GameDirector : MonoBehaviour
         }
     }
 
-    void Dividend(int dividend)
+    void Dividend(int bet)
     {
+        int dividend;
+
         if (isWin)
         {
             if (playerController.IsBlackjack)
             {
-                dividend = (int)(dividend * 2.5);
+                dividend = (int)(bet * 2.5);
                 playerController.Money += dividend;
             }
             else
             {
-                dividend *= 2;
+                dividend = bet * 2;
                 playerController.Money += dividend;
             }
         }
         else if (isDraw)
         {
+            dividend = bet;
             playerController.Money += dividend;
         }
         else if (isLose)
@@ -167,7 +191,7 @@ public class GameDirector : MonoBehaviour
         }
         else
         {
-            dividend /= 2;
+            dividend = bet / 2;
             playerController.Money += dividend;
         }
     }
