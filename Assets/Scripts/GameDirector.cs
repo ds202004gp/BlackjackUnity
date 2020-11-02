@@ -78,44 +78,8 @@ public class GameDirector : MonoBehaviour
 
     public void GameStart()
     {
-        bet = 0;
         playerController.GameStart();
         dealerController.GameStart();
-
-        startButton.SetActive(false);
-        standButton.SetActive(true);
-        retryButton.SetActive(false);
-        playerButtons.SetActive(true);
-        betButtons.SetActive(false);
-
-        if (playerController.Money - bet < 0)
-        {
-            doubleDownButton.SetActive(false);
-        }
-        else
-        {
-            doubleDownButton.SetActive(true);
-        }
-    }
-    public void Stand()
-    {
-        if (!isSrrender)
-        {
-            dealerController.DrawDealer();
-        }
-        Judgement();
-
-        if (IsGameFollow())
-        {
-            startButton.SetActive(false);
-            standButton.SetActive(false);
-            retryButton.SetActive(true);
-            playerButtons.SetActive(false);
-        }
-        else
-        {
-            GameOver();
-        }
     }
 
     bool IsGameFollow()
@@ -125,34 +89,6 @@ public class GameDirector : MonoBehaviour
     void GameOver()
     {
         gameOverPanel.SetActive(true);
-
-        startButton.SetActive(false);
-        standButton.SetActive(false);
-        retryButton.SetActive(false);
-        playerButtons.SetActive(false);
-        betButtons.SetActive(false);
-    }
-    public void ResetField()
-    {
-        playerController.Money += dividend;
-
-        isWin = false;
-        isDraw = false;
-        isLose = false;
-        isSrrender = false;
-
-        startButton.SetActive(true);
-        standButton.SetActive(false);
-        retryButton.SetActive(false);
-        playerButtons.SetActive(false);
-        betButtons.SetActive(true);
-
-        judgementText.text = "";
-        plusMoneyText.text = "";
-
-        trumpController.ResetCardsInfo();
-        playerController.ResetCardsInfo();
-        dealerController.ResetCardsInfo();
     }
 
     bool isWin;
@@ -165,7 +101,6 @@ public class GameDirector : MonoBehaviour
         {
             judgementText.text = "SURRENDER";
             judgementText.color = Color.blue;
-            Dividend(bet);
             return;
         }
 
@@ -190,9 +125,7 @@ public class GameDirector : MonoBehaviour
             judgementText.color = Color.blue;
             isLose = true;
         }
-        Dividend(bet);
     }
-
     int dividend;
     void Dividend(int bet)
     {
@@ -225,12 +158,37 @@ public class GameDirector : MonoBehaviour
         }
         plusMoneyText.text = $"+ ${dividend}";
     }
-
-    public void StandButtonOnly()
+    public void Stand()
     {
-        startButton.SetActive(false);
-        standButton.SetActive(true);
-        retryButton.SetActive(false);
-        playerButtons.SetActive(false);
+        if (!isSrrender)
+        {
+            dealerController.DrawDealer();
+        }
+
+        Judgement();
+        Dividend(bet);
+
+        if (!IsGameFollow())
+        {
+            GameOver();
+        }
+    }
+
+    public void ResetField()
+    {
+        playerController.Money += dividend;
+        bet = 0;
+
+        isWin = false;
+        isDraw = false;
+        isLose = false;
+        isSrrender = false;
+
+        judgementText.text = "";
+        plusMoneyText.text = "";
+
+        trumpController.ResetCardsInfo();
+        playerController.ResetCardsInfo();
+        dealerController.ResetCardsInfo();
     }
 }

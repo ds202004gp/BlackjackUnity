@@ -54,6 +54,15 @@ public class ButtonController : MonoBehaviour
         hitButton.onClick.AddListener(HitButton);
         doubleDownButton.onClick.AddListener(DoubleDownButton);
         surrenderButton.onClick.AddListener(SurrenderButton);
+
+        startButton.gameObject.SetActive(true);
+        standButton.gameObject.SetActive(false);
+        retryButton.gameObject.SetActive(false);
+        hitButton.gameObject.SetActive(false);
+        surrenderButton.gameObject.SetActive(false);
+        doubleDownButton.gameObject.SetActive(false);
+        upButton.gameObject.SetActive(true);
+        downButton.gameObject.SetActive(true);
     }
     void GotoTitleButton()
     {
@@ -70,25 +79,82 @@ public class ButtonController : MonoBehaviour
     void StartButton()
     {
         gameDirector.GameStart();
+
+        startButton.gameObject.SetActive(false);
+        standButton.gameObject.SetActive(true);
+        retryButton.gameObject.SetActive(false);
+        hitButton.gameObject.SetActive(true);
+        surrenderButton.gameObject.SetActive(true);
+
+        if (playerController.Money - gameDirector.Bet >= 0)
+        {
+            doubleDownButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            doubleDownButton.gameObject.SetActive(false);
+        }
+
+        upButton.gameObject.SetActive(false);
+        downButton.gameObject.SetActive(false);
     }
     void StandButton()
     {
         gameDirector.Stand();
+
+        startButton.gameObject.SetActive(false);
+        standButton.gameObject.SetActive(false);
+        retryButton.gameObject.SetActive(true);
+        hitButton.gameObject.SetActive(false);
+        surrenderButton.gameObject.SetActive(false);
+        doubleDownButton.gameObject.SetActive(false);
+        upButton.gameObject.SetActive(false);
+        downButton.gameObject.SetActive(false);
     }
     void RetryButton()
     {
         gameDirector.ResetField();
+
+        startButton.gameObject.SetActive(true);
+        standButton.gameObject.SetActive(false);
+        retryButton.gameObject.SetActive(false);
+        hitButton.gameObject.SetActive(false);
+        surrenderButton.gameObject.SetActive(false);
+        doubleDownButton.gameObject.SetActive(false);
+        upButton.gameObject.SetActive(true);
+        downButton.gameObject.SetActive(true);
     }
     void HitButton()
     {
         playerController.Hit();
+
+        if (playerController.GetScore() == 0)
+        {
+            hitButton.gameObject.SetActive(false);
+        }
+
+        surrenderButton.gameObject.SetActive(false);
+        doubleDownButton.gameObject.SetActive(false);
     }
     void DoubleDownButton()
     {
         playerController.DoubleDown();
+
+        hitButton.gameObject.SetActive(false);
+        surrenderButton.gameObject.SetActive(false);
+        doubleDownButton.gameObject.SetActive(false);
     }
     void SurrenderButton()
     {
         playerController.Surrender();
+
+        startButton.gameObject.SetActive(false);
+        standButton.gameObject.SetActive(false);
+        retryButton.gameObject.SetActive(true);
+        hitButton.gameObject.SetActive(false);
+        surrenderButton.gameObject.SetActive(false);
+        doubleDownButton.gameObject.SetActive(false);
+        upButton.gameObject.SetActive(false);
+        downButton.gameObject.SetActive(false);
     }
 }

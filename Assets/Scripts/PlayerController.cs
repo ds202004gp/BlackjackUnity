@@ -81,17 +81,11 @@ public class PlayerController : CharacterBase
         AddCharacterCards(trumpController.DrawCard());
         ShowCharacterCards();
         ShowCharacterScore();
-
-        if (GetScore() == 0)
-        {
-            gameDirector.StandButtonOnly();
-        }
     }
     public void DoubleDown()
     {
         ThrowBet();
         Hit();
-        gameDirector.StandButtonOnly();
     }
     public void Surrender()
     {
