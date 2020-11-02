@@ -49,7 +49,7 @@ public class CharacterBase : MonoBehaviour
     }
     public virtual void ResetCardsInfo()
     {
-        IsBlackjack = false;
+        isBlackjack = false;
         isBust = false;
         blackjackOrBust.text = "";
         characterCards = new List<Card>();
@@ -58,7 +58,7 @@ public class CharacterBase : MonoBehaviour
 
         for (int i = 0; i < characterCardSprites.Count; i++)
         {
-            characterCardSprites[i].sprite = trumpController.back;
+            characterCardSprites[i].sprite = trumpController.Back;
         }
     }
     void CharacterCardSpritesReset()
@@ -100,6 +100,7 @@ public class CharacterBase : MonoBehaviour
     {
         int score = 0;
         int aceCount = 0;
+
         foreach (Card card in characterCards)
         {
             if (card.Number == 11)
@@ -109,11 +110,12 @@ public class CharacterBase : MonoBehaviour
             score += card.Number;
         }
 
-        if (score > 21)
+        while (score > 21)
         {
-            for (int i = 0; i < aceCount; i++)
+            if (aceCount > 0)
             {
                 score -= 10;
+                aceCount--;
             }
         }
 
@@ -121,16 +123,16 @@ public class CharacterBase : MonoBehaviour
         return score == 21 && characterCards.Count == 2;
     }
 
-    private bool isBlackjack;
-    public bool IsBlackjack { get => isBlackjack; set => isBlackjack = value; }
+    bool isBlackjack;
+    public bool IsBlackjack { get => isBlackjack; }
 
-    protected bool isBust;
+    bool isBust;
 
     protected void ShowCharacterScore()
     {
-        IsBlackjack = CharacterScoreSum();
+        isBlackjack = CharacterScoreSum();
 
-        if (IsBlackjack)
+        if (isBlackjack)
         {
             blackjackOrBust.text = "BLACKJACK!!";
             blackjackOrBust.color = Color.yellow;
@@ -145,7 +147,7 @@ public class CharacterBase : MonoBehaviour
     }
     public int GetScore()
     {
-        if (IsBlackjack)
+        if (isBlackjack)
         {
             return 22;
         }

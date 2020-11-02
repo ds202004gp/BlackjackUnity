@@ -8,24 +8,6 @@ using UnityEngine.UI;
 public class GameDirector : MonoBehaviour
 {
     [SerializeField]
-    GameObject startButton;
-
-    [SerializeField]
-    GameObject standButton;
-
-    [SerializeField]
-    GameObject retryButton;
-
-    [SerializeField]
-    GameObject playerButtons;
-
-    [SerializeField]
-    GameObject doubleDownButton;
-
-    [SerializeField]
-    GameObject betButtons;
-
-    [SerializeField]
     GameObject gameOverPanel;
 
     [SerializeField]
@@ -33,6 +15,8 @@ public class GameDirector : MonoBehaviour
 
     [SerializeField]
     DealerController dealerController;
+
+    TrumpController trumpController;
 
     [SerializeField]
     Text judgementText;
@@ -61,7 +45,6 @@ public class GameDirector : MonoBehaviour
             playerController.MinBet = value;
         }
     }
-    TrumpController trumpController;
 
     int bet;
     public int Bet { get => bet; set => bet = value; }
@@ -82,28 +65,22 @@ public class GameDirector : MonoBehaviour
         dealerController.GameStart();
     }
 
-    bool IsGameFollow()
-    {
-        return !(playerController.Money < minBet && judgeEnum == JudgeEnum.lose);
-    }
-    void GameOver()
-    {
-        gameOverPanel.SetActive(true);
-    }
-
-    public JudgeEnum judgeEnum;
-    public enum JudgeEnum
+    JudgeEnum judgeEnum;
+    enum JudgeEnum
     {
         win,
         draw,
         lose,
-        surrender
     }
-    public bool isSrrender;
+
+    bool isSurrender;
+    public bool IsSurrender { set => isSurrender = value; }
+
     void Judgement()
     {
-        if (judgeEnum == JudgeEnum.surrender)
+        if (isSurrender)
         {
+            judgeEnum = JudgeEnum.lose;
             judgementText.text = "SURRENDER";
             judgementText.color = Color.blue;
             return;
@@ -114,21 +91,21 @@ public class GameDirector : MonoBehaviour
 
         if (playerScore > dealerScore)
         {
+            judgeEnum = JudgeEnum.win;
             judgementText.text = "WIN!!";
             judgementText.color = Color.yellow;
-            judgeEnum = JudgeEnum.win;
         }
         else if (playerScore == dealerScore)
         {
+            judgeEnum = JudgeEnum.draw;
             judgementText.text = "DRAW";
             judgementText.color = Color.grey;
-            judgeEnum = JudgeEnum.draw;
         }
         else if (playerScore < dealerScore)
         {
+            judgeEnum = JudgeEnum.lose;
             judgementText.text = "LOSE...";
             judgementText.color = Color.blue;
-            judgeEnum = JudgeEnum.lose;
         }
     }
     int dividend;
@@ -146,6 +123,7 @@ public class GameDirector : MonoBehaviour
                 {
                     dividend = bet * 2;
                 }
+
                 plusMoneyText.color = Color.yellow;
                 break;
 
@@ -157,21 +135,30 @@ public class GameDirector : MonoBehaviour
 
             case JudgeEnum.lose:
 
+                if (isSurrender)
+                {
+                    dividend = bet / 2;
+                    plusMoneyText.color = Color.blue;
+                    break;
+                }
+
                 dividend = 0;
                 return;
-
-            case JudgeEnum.surrender:
-
-                dividend = bet / 2;
-                plusMoneyText.color = Color.blue;
-                break;
         }
 
         plusMoneyText.text = $"+ ${dividend}";
     }
+    bool IsGameFollow()
+    {
+        return !(playerController.Money < minBet && judgeEnum == JudgeEnum.lose);
+    }
+    void GameOver()
+    {
+        gameOverPanel.SetActive(true);
+    }
     public void Stand()
     {
-        if (!(judgeEnum == JudgeEnum.surrender))
+        if (!isSurrender)
         {
             dealerController.DrawDealer();
         }
@@ -190,7 +177,7 @@ public class GameDirector : MonoBehaviour
         playerController.Money += dividend;
         bet = 0;
 
-        judgeEnum = JudgeEnum.draw;
+        isSurrender = false;
 
         judgementText.text = "";
         plusMoneyText.text = "";

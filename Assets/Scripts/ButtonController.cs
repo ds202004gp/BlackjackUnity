@@ -10,10 +10,10 @@ public class ButtonController : MonoBehaviour
     Button gotoTitleButton;
 
     [SerializeField]
-    Button upButton;
+    Button betUpButton;
 
     [SerializeField]
-    Button downButton;
+    Button betDownButton;
 
     [SerializeField]
     Button startButton;
@@ -46,8 +46,8 @@ public class ButtonController : MonoBehaviour
     void Start()
     {
         gotoTitleButton.onClick.AddListener(GotoTitleButton);
-        upButton.onClick.AddListener(UpButton);
-        downButton.onClick.AddListener(DownButton);
+        betUpButton.onClick.AddListener(BetUpButton);
+        betDownButton.onClick.AddListener(BetDownButton);
         startButton.onClick.AddListener(StartButton);
         standButton.onClick.AddListener(StandButton);
         retryButton.onClick.AddListener(RetryButton);
@@ -55,24 +55,17 @@ public class ButtonController : MonoBehaviour
         doubleDownButton.onClick.AddListener(DoubleDownButton);
         surrenderButton.onClick.AddListener(SurrenderButton);
 
-        startButton.gameObject.SetActive(true);
-        standButton.gameObject.SetActive(false);
-        retryButton.gameObject.SetActive(false);
-        hitButton.gameObject.SetActive(false);
-        surrenderButton.gameObject.SetActive(false);
-        doubleDownButton.gameObject.SetActive(false);
-        upButton.gameObject.SetActive(true);
-        downButton.gameObject.SetActive(true);
+        StartWindowButtons();
     }
     void GotoTitleButton()
     {
         SceneManager.LoadScene("TitleScene");
     }
-    void UpButton()
+    void BetUpButton()
     {
         playerController.BetUpDown(true);
     }
-    void DownButton()
+    void BetDownButton()
     {
         playerController.BetUpDown(false);
     }
@@ -95,34 +88,20 @@ public class ButtonController : MonoBehaviour
             doubleDownButton.gameObject.SetActive(false);
         }
 
-        upButton.gameObject.SetActive(false);
-        downButton.gameObject.SetActive(false);
+        betUpButton.gameObject.SetActive(false);
+        betDownButton.gameObject.SetActive(false);
     }
     void StandButton()
     {
         gameDirector.Stand();
 
-        startButton.gameObject.SetActive(false);
-        standButton.gameObject.SetActive(false);
-        retryButton.gameObject.SetActive(true);
-        hitButton.gameObject.SetActive(false);
-        surrenderButton.gameObject.SetActive(false);
-        doubleDownButton.gameObject.SetActive(false);
-        upButton.gameObject.SetActive(false);
-        downButton.gameObject.SetActive(false);
+        ResultWindowButtons();
     }
     void RetryButton()
     {
         gameDirector.ResetField();
 
-        startButton.gameObject.SetActive(true);
-        standButton.gameObject.SetActive(false);
-        retryButton.gameObject.SetActive(false);
-        hitButton.gameObject.SetActive(false);
-        surrenderButton.gameObject.SetActive(false);
-        doubleDownButton.gameObject.SetActive(false);
-        upButton.gameObject.SetActive(true);
-        downButton.gameObject.SetActive(true);
+        StartWindowButtons();
     }
     void HitButton()
     {
@@ -148,13 +127,30 @@ public class ButtonController : MonoBehaviour
     {
         playerController.Surrender();
 
+        ResultWindowButtons();
+    }
+
+    void StartWindowButtons()
+    {
+        startButton.gameObject.SetActive(true);
+        standButton.gameObject.SetActive(false);
+        retryButton.gameObject.SetActive(false);
+        hitButton.gameObject.SetActive(false);
+        surrenderButton.gameObject.SetActive(false);
+        doubleDownButton.gameObject.SetActive(false);
+        betUpButton.gameObject.SetActive(true);
+        betDownButton.gameObject.SetActive(true);
+    }
+
+    void ResultWindowButtons()
+    {
         startButton.gameObject.SetActive(false);
         standButton.gameObject.SetActive(false);
         retryButton.gameObject.SetActive(true);
         hitButton.gameObject.SetActive(false);
         surrenderButton.gameObject.SetActive(false);
         doubleDownButton.gameObject.SetActive(false);
-        upButton.gameObject.SetActive(false);
-        downButton.gameObject.SetActive(false);
+        betUpButton.gameObject.SetActive(false);
+        betDownButton.gameObject.SetActive(false);
     }
 }

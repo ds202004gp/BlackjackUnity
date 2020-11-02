@@ -11,7 +11,6 @@ public class PlayerController : CharacterBase
 
     [SerializeField]
     int money;
-
     public int Money
     {
         get => money;
@@ -36,12 +35,6 @@ public class PlayerController : CharacterBase
     [SerializeField]
     Text betText;
 
-    int maxBet;
-    public int MaxBet { set => maxBet = value; }
-
-    int minBet;
-    public int MinBet { set => minBet = value; }
-
     [SerializeField]
     int bet;
     int Bet
@@ -53,6 +46,12 @@ public class PlayerController : CharacterBase
             betText.text = $"${bet:n0}";
         }
     }
+
+    int maxBet;
+    public int MaxBet { set => maxBet = value; }
+
+    int minBet;
+    public int MinBet { set => minBet = value; }
 
     protected override void Awake()
     {
@@ -89,8 +88,7 @@ public class PlayerController : CharacterBase
     }
     public void Surrender()
     {
-        gameDirector.judgeEnum = GameDirector.JudgeEnum.surrender;
-        gameDirector.isSrrender = true;
+        gameDirector.IsSurrender = true;
         gameDirector.Stand();
     }
     public void BetUpDown(bool IsUpDown)

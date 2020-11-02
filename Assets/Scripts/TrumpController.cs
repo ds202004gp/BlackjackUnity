@@ -10,7 +10,9 @@ public class TrumpController : MonoBehaviour
     [SerializeField]
     Sprite[] trump;
 
-    public Sprite back;
+    [SerializeField]
+    Sprite back;
+    public Sprite Back { get => back; }
 
     List<Card> orderCards;
     Stack<Card> playingCards;
@@ -19,14 +21,6 @@ public class TrumpController : MonoBehaviour
     {
         CreateCards();
         ShuffleCards();
-        /*
-        foreach (var item in playingCards)
-        {
-            Debug.Log($"{item.Suit} {item.Number} {item.Sprite}");
-        }
-
-        Debug.Log(playingCards.Count);
-        */
     }
 
     void CreateCards()
