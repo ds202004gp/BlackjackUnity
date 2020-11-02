@@ -89,6 +89,7 @@ public class PlayerController : CharacterBase
     }
     public void Surrender()
     {
+        gameDirector.judgeEnum = GameDirector.JudgeEnum.surrender;
         gameDirector.isSrrender = true;
         gameDirector.Stand();
     }

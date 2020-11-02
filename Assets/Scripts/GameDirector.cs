@@ -84,20 +84,25 @@ public class GameDirector : MonoBehaviour
 
     bool IsGameFollow()
     {
-        return !(playerController.Money < minBet && isLose);
+        return !(playerController.Money < minBet && judgeEnum == JudgeEnum.lose);
     }
     void GameOver()
     {
         gameOverPanel.SetActive(true);
     }
 
-    bool isWin;
-    bool isDraw;
-    bool isLose;
+    public JudgeEnum judgeEnum;
+    public enum JudgeEnum
+    {
+        win,
+        draw,
+        lose,
+        surrender
+    }
     public bool isSrrender;
     void Judgement()
     {
-        if (isSrrender)
+        if (judgeEnum == JudgeEnum.surrender)
         {
             judgementText.text = "SURRENDER";
             judgementText.color = Color.blue;
@@ -111,56 +116,62 @@ public class GameDirector : MonoBehaviour
         {
             judgementText.text = "WIN!!";
             judgementText.color = Color.yellow;
-            isWin = true;
+            judgeEnum = JudgeEnum.win;
         }
         else if (playerScore == dealerScore)
         {
             judgementText.text = "DRAW";
             judgementText.color = Color.grey;
-            isDraw = true;
+            judgeEnum = JudgeEnum.draw;
         }
         else if (playerScore < dealerScore)
         {
             judgementText.text = "LOSE...";
             judgementText.color = Color.blue;
-            isLose = true;
+            judgeEnum = JudgeEnum.lose;
         }
     }
     int dividend;
     void Dividend(int bet)
     {
-        if (isWin)
+        switch (judgeEnum)
         {
-            if (playerController.IsBlackjack)
-            {
-                dividend = (int)(bet * 2.5);
-            }
-            else
-            {
-                dividend = bet * 2;
-            }
-            plusMoneyText.color = Color.yellow;
+            case JudgeEnum.win:
+
+                if (playerController.IsBlackjack)
+                {
+                    dividend = (int)(bet * 2.5);
+                }
+                else
+                {
+                    dividend = bet * 2;
+                }
+                plusMoneyText.color = Color.yellow;
+                break;
+
+            case JudgeEnum.draw:
+
+                dividend = bet;
+                plusMoneyText.color = Color.gray;
+                break;
+
+            case JudgeEnum.lose:
+
+                dividend = 0;
+                return;
+
+            case JudgeEnum.surrender:
+
+                dividend = bet / 2;
+                plusMoneyText.color = Color.blue;
+                break;
         }
-        else if (isDraw)
-        {
-            dividend = bet;
-            plusMoneyText.color = Color.gray;
-        }
-        else if (isLose)
-        {
-            dividend = 0;
-            return;
-        }
-        else
-        {
-            dividend = bet / 2;
-            plusMoneyText.color = Color.blue;
-        }
+
         plusMoneyText.text = $"+ ${dividend}";
     }
     public void Stand()
     {
-        if (!isSrrender)
+        if (!(judgeEnum == JudgeEnum.surrender))
         {
             dealerController.DrawDealer();
         }
@@ -179,10 +190,7 @@ public class GameDirector : MonoBehaviour
         playerController.Money += dividend;
         bet = 0;
 
-        isWin = false;
-        isDraw = false;
-        isLose = false;
-        isSrrender = false;
+        judgeEnum = JudgeEnum.draw;
 
         judgementText.text = "";
         plusMoneyText.text = "";
