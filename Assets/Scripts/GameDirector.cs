@@ -20,6 +20,9 @@ public class GameDirector : MonoBehaviour
     GameObject playerButtons;
 
     [SerializeField]
+    GameObject doubleDownButton;
+
+    [SerializeField]
     GameObject betButtons;
 
     [SerializeField]
@@ -33,6 +36,9 @@ public class GameDirector : MonoBehaviour
 
     [SerializeField]
     Text judgementText;
+
+    [SerializeField]
+    Text plusMoneyText;
 
     [SerializeField]
     int maxBet;
@@ -81,10 +87,18 @@ public class GameDirector : MonoBehaviour
         retryButton.SetActive(false);
         playerButtons.SetActive(true);
         betButtons.SetActive(false);
+
+        if (playerController.Money - bet < 0)
+        {
+            doubleDownButton.SetActive(false);
+        }
     }
     public void Stand()
     {
-        dealerController.DrawDealer();
+        if (!isSrrender)
+        {
+            dealerController.DrawDealer();
+        }
         Judgement();
 
         if (IsGameFollow())
@@ -116,11 +130,12 @@ public class GameDirector : MonoBehaviour
     }
     public void ResetField()
     {
-        Dividend(bet);
+        playerController.Money += dividend;
 
         isWin = false;
         isDraw = false;
         isLose = false;
+        isSrrender = false;
 
         startButton.SetActive(true);
         standButton.SetActive(false);
@@ -129,6 +144,7 @@ public class GameDirector : MonoBehaviour
         betButtons.SetActive(true);
 
         judgementText.text = "";
+        plusMoneyText.text = "";
 
         trumpController.ResetCardsInfo();
         playerController.ResetCardsInfo();
@@ -138,8 +154,17 @@ public class GameDirector : MonoBehaviour
     bool isWin;
     bool isDraw;
     bool isLose;
+    public bool isSrrender;
     void Judgement()
     {
+        if (isSrrender)
+        {
+            judgementText.text = "SURRENDER";
+            judgementText.color = Color.blue;
+            Dividend(bet);
+            return;
+        }
+
         int playerScore = playerController.GetScore();
         int dealerScore = dealerController.GetScore();
 
@@ -161,39 +186,40 @@ public class GameDirector : MonoBehaviour
             judgementText.color = Color.blue;
             isLose = true;
         }
+        Dividend(bet);
     }
 
+    int dividend;
     void Dividend(int bet)
     {
-        int dividend;
-
         if (isWin)
         {
             if (playerController.IsBlackjack)
             {
                 dividend = (int)(bet * 2.5);
-                playerController.Money += dividend;
             }
             else
             {
                 dividend = bet * 2;
-                playerController.Money += dividend;
             }
+            plusMoneyText.color = Color.yellow;
         }
         else if (isDraw)
         {
             dividend = bet;
-            playerController.Money += dividend;
+            plusMoneyText.color = Color.gray;
         }
         else if (isLose)
         {
+            dividend = 0;
             return;
         }
         else
         {
             dividend = bet / 2;
-            playerController.Money += dividend;
+            plusMoneyText.color = Color.blue;
         }
+        plusMoneyText.text = $"+ ${dividend}";
     }
 
     public void StandButtonOnly()

@@ -17,11 +17,19 @@ public class PlayerController : CharacterBase
         get => money;
         set
         {
-            if (0 <= value)
+            if (value <= 0)
+            {
+                money = 0;
+            }
+            else if (value >= 1000000000)
+            {
+                money = 999999999;
+            }
+            else
             {
                 money = value;
-                moneyText.text = $"${money:n0}";
             }
+            moneyText.text = $"${money:n0}";
         }
     }
 
@@ -87,7 +95,8 @@ public class PlayerController : CharacterBase
     }
     public void Surrender()
     {
-        gameDirector.ResetField();
+        gameDirector.isSrrender = true;
+        gameDirector.Stand();
     }
     public void BetUpDown(bool IsUpDown)
     {
