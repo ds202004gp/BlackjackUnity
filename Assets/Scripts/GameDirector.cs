@@ -92,6 +92,10 @@ public class GameDirector : MonoBehaviour
         {
             doubleDownButton.SetActive(false);
         }
+        else
+        {
+            doubleDownButton.SetActive(true);
+        }
     }
     public void Stand()
     {
