@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class PlayerController : CharacterBase
 {
+    DealerController dealerController;
+
     [SerializeField]
     Text moneyText;
 
@@ -56,6 +58,7 @@ public class PlayerController : CharacterBase
     protected override void Awake()
     {
         base.Awake();
+        dealerController = characterController.GetComponent<DealerController>();
         Bet = bet;
         Money = money;
     }
@@ -111,6 +114,6 @@ public class PlayerController : CharacterBase
     void ThrowBet()
     {
         Money -= bet;
-        gameDirector.Bet += bet;
+        dealerController.Bet += bet;
     }
 }

@@ -7,6 +7,9 @@ using UnityEngine.UI;
 public class CharacterBase : MonoBehaviour
 {
     [SerializeField]
+    protected GameObject characterController;
+
+    [SerializeField]
     protected Text blackjackOrBust;
 
     [SerializeField]
@@ -131,17 +134,17 @@ public class CharacterBase : MonoBehaviour
     protected void ShowCharacterScore()
     {
         isBlackjack = CharacterScoreSum();
+        isBust = characterScore > 21;
 
         if (isBlackjack)
         {
             blackjackOrBust.text = "BLACKJACK!!";
             blackjackOrBust.color = Color.yellow;
         }
-        else if (characterScore > 21)
+        else if (isBust)
         {
             blackjackOrBust.text = "BUST...";
             blackjackOrBust.color = Color.blue;
-            isBust = true;
         }
         scoreText.text = $"{characterScore}";
     }

@@ -46,10 +46,6 @@ public class GameDirector : MonoBehaviour
         }
     }
 
-    int bet;
-    public int Bet { get => bet; set => bet = value; }
-
-    // Start is called before the first frame update
     void Start()
     {
         gameOverPanel.SetActive(false);
@@ -108,20 +104,21 @@ public class GameDirector : MonoBehaviour
             judgementText.color = Color.blue;
         }
     }
-    int dividend;
-    void Dividend(int bet)
+    void DividendResult()
     {
+        float dividendMultiplier = 0;
+
         switch (judgeEnum)
         {
             case JudgeEnum.win:
 
                 if (playerController.IsBlackjack)
                 {
-                    dividend = (int)(bet * 2.5);
+                    dividendMultiplier = 2.5f;
                 }
                 else
                 {
-                    dividend = bet * 2;
+                    dividendMultiplier = 2;
                 }
 
                 plusMoneyText.color = Color.yellow;
@@ -129,7 +126,7 @@ public class GameDirector : MonoBehaviour
 
             case JudgeEnum.draw:
 
-                dividend = bet;
+                dividendMultiplier = 1;
                 plusMoneyText.color = Color.gray;
                 break;
 
@@ -137,20 +134,25 @@ public class GameDirector : MonoBehaviour
 
                 if (isSurrender)
                 {
-                    dividend = bet / 2;
+                    dividendMultiplier = 0.5f;
                     plusMoneyText.color = Color.blue;
                     break;
                 }
 
-                dividend = 0;
+                isDividendNone = true;
                 return;
         }
 
-        plusMoneyText.text = $"+ ${dividend}";
+        plusMoneyText.text = $"+ ${dealerController.Dividend(dividendMultiplier)}";
     }
+    bool isDividendNone;
     bool IsGameFollow()
     {
-        return !(playerController.Money < minBet && judgeEnum == JudgeEnum.lose);
+        if (isSurrender)
+        {
+
+        }
+        return !(playerController.Money < minBet && isDividendNone);
     }
     void GameOver()
     {
@@ -164,7 +166,7 @@ public class GameDirector : MonoBehaviour
         }
 
         Judgement();
-        Dividend(bet);
+        DividendResult();
 
         if (!IsGameFollow())
         {
@@ -174,10 +176,10 @@ public class GameDirector : MonoBehaviour
 
     public void ResetField()
     {
-        playerController.Money += dividend;
-        bet = 0;
+        dealerController.DividendToPlayer();
 
         isSurrender = false;
+        isDividendNone = false;
 
         judgementText.text = "";
         plusMoneyText.text = "";

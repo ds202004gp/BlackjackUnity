@@ -79,7 +79,7 @@ public class ButtonController : MonoBehaviour
         hitButton.gameObject.SetActive(true);
         surrenderButton.gameObject.SetActive(true);
 
-        if (playerController.Money - gameDirector.Bet >= 0)
+        if (playerController.Money - dealerController.Bet >= 0)
         {
             doubleDownButton.gameObject.SetActive(true);
         }

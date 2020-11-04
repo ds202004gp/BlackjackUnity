@@ -648,8 +648,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gotoTitleButton: {fileID: 1239120461}
-  upButton: {fileID: 1956623330}
-  downButton: {fileID: 1212850945}
+  betUpButton: {fileID: 1956623330}
+  betDownButton: {fileID: 1212850945}
   startButton: {fileID: 915555957}
   standButton: {fileID: 1349684526}
   retryButton: {fileID: 1205700620}
@@ -671,12 +671,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 363bbf10098118840b2705331dc9fb5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startButton: {fileID: 915555955}
-  standButton: {fileID: 1349684524}
-  retryButton: {fileID: 1205700618}
-  playerButtons: {fileID: 1938610457}
-  doubleDownButton: {fileID: 589006627}
-  betButtons: {fileID: 374103751}
   gameOverPanel: {fileID: 469552752}
   playerController: {fileID: 1761747842}
   dealerController: {fileID: 1501686713}
@@ -684,7 +678,6 @@ MonoBehaviour:
   plusMoneyText: {fileID: 1135147145}
   maxBet: 50
   minBet: 5
-  judgeEnum: 0
 --- !u!4 &426998836
 Transform:
   m_ObjectHideFlags: 0
