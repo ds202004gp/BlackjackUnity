@@ -113,13 +113,10 @@ public class CharacterBase : MonoBehaviour
             score += card.Number;
         }
 
-        while (score > 21)
+        while (score > 21 && aceCount > 0)
         {
-            if (aceCount > 0)
-            {
-                score -= 10;
-                aceCount--;
-            }
+            score -= 10;
+            aceCount--;
         }
 
         characterScore = score;
