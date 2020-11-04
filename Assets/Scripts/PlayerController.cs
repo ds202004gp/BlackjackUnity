@@ -72,6 +72,7 @@ public class PlayerController : CharacterBase
     public override void ResetCardsInfo()
     {
         base.ResetCardsInfo();
+        isSurrender = false;
 
         while (money < bet)
         {
@@ -89,9 +90,11 @@ public class PlayerController : CharacterBase
         ThrowBet();
         Hit();
     }
+    bool isSurrender;
+    public bool IsSurrender { get => isSurrender; }
     public void Surrender()
     {
-        gameDirector.IsSurrender = true;
+        isSurrender = true;
         gameDirector.Stand();
     }
     public void BetUpDown(bool IsUpDown)

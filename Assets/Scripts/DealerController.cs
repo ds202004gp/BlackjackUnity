@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DealerController : CharacterBase
 {
     PlayerController playerController;
+
+    [SerializeField]
+    Text dividendText;
 
     int bet;
     public int Bet { get => bet; set => bet = value; }
@@ -24,7 +28,7 @@ public class DealerController : CharacterBase
     {
         base.ResetCardsInfo();
         bet = 0;
-        dividend = 0;
+        dividendText.text = "";
     }
     void UpCard()
     {
@@ -49,13 +53,49 @@ public class DealerController : CharacterBase
     }
 
     int dividend;
-    public int Dividend(float dividendMultiplier)
-    {
-        dividend = (int)(bet * dividendMultiplier);
-        return dividend;
-    }
+    public int Dividend { get => dividend; }
+
     public void DividendToPlayer()
     {
         playerController.Money += dividend;
+    }
+    public void DividendResult(GameDirector.JudgeEnum judgeEnum)
+    {
+        switch (judgeEnum)
+        {
+            case GameDirector.JudgeEnum.win:
+
+                if (playerController.IsBlackjack)
+                {
+                    dividend = (int)(bet * 2.5);
+                }
+                else
+                {
+                    dividend = bet * 2;
+                }
+
+                dividendText.color = Color.yellow;
+                break;
+
+            case GameDirector.JudgeEnum.draw:
+
+                dividend = bet;
+                dividendText.color = Color.gray;
+                break;
+
+            case GameDirector.JudgeEnum.lose:
+
+                if (playerController.IsSurrender)
+                {
+                    dividend = bet / 2;
+                    dividendText.color = Color.blue;
+                    break;
+                }
+
+                dividend = 0;
+                return;
+        }
+
+        dividendText.text = $"+ ${dividend}";
     }
 }

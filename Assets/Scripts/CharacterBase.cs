@@ -147,17 +147,8 @@ public class CharacterBase : MonoBehaviour
     }
     public int GetScore()
     {
-        if (isBlackjack)
-        {
-            return 22;
-        }
-        else if (isBust)
-        {
-            return 0;
-        }
-        else
-        {
-            return characterScore;
-        }
+        if (isBlackjack) return 22;
+
+        return isBust ? 0 : characterScore;
     }
 }

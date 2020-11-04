@@ -675,9 +675,9 @@ MonoBehaviour:
   playerController: {fileID: 1761747842}
   dealerController: {fileID: 1501686713}
   judgementText: {fileID: 1793123173}
-  plusMoneyText: {fileID: 1135147145}
   maxBet: 50
   minBet: 5
+  judgeEnum: 0
 --- !u!4 &426998836
 Transform:
   m_ObjectHideFlags: 0
@@ -1678,7 +1678,7 @@ GameObject:
   - component: {fileID: 1135147144}
   - component: {fileID: 1135147143}
   m_Layer: 5
-  m_Name: PlusMoneyText
+  m_Name: DividendText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3205,6 +3205,7 @@ MonoBehaviour:
   cardPrefab: {fileID: 2121394661423363319, guid: cf11e65d0f28df6448ddb3b09bddbd88,
     type: 3}
   direction: -0.5
+  dividendText: {fileID: 1135147145}
 --- !u!1 &1565686616
 GameObject:
   m_ObjectHideFlags: 0

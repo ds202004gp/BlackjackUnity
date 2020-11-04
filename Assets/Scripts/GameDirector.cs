@@ -22,9 +22,6 @@ public class GameDirector : MonoBehaviour
     Text judgementText;
 
     [SerializeField]
-    Text plusMoneyText;
-
-    [SerializeField]
     int maxBet;
     int MaxBet
     {
@@ -61,20 +58,16 @@ public class GameDirector : MonoBehaviour
         dealerController.GameStart();
     }
 
-    JudgeEnum judgeEnum;
-    enum JudgeEnum
+    public JudgeEnum judgeEnum;
+    public enum JudgeEnum
     {
         win,
         draw,
         lose,
     }
-
-    bool isSurrender;
-    public bool IsSurrender { set => isSurrender = value; }
-
     void Judgement()
     {
-        if (isSurrender)
+        if (playerController.IsSurrender)
         {
             judgeEnum = JudgeEnum.lose;
             judgementText.text = "SURRENDER";
@@ -104,55 +97,10 @@ public class GameDirector : MonoBehaviour
             judgementText.color = Color.blue;
         }
     }
-    void DividendResult()
-    {
-        float dividendMultiplier = 0;
 
-        switch (judgeEnum)
-        {
-            case JudgeEnum.win:
-
-                if (playerController.IsBlackjack)
-                {
-                    dividendMultiplier = 2.5f;
-                }
-                else
-                {
-                    dividendMultiplier = 2;
-                }
-
-                plusMoneyText.color = Color.yellow;
-                break;
-
-            case JudgeEnum.draw:
-
-                dividendMultiplier = 1;
-                plusMoneyText.color = Color.gray;
-                break;
-
-            case JudgeEnum.lose:
-
-                if (isSurrender)
-                {
-                    dividendMultiplier = 0.5f;
-                    plusMoneyText.color = Color.blue;
-                    break;
-                }
-
-                isDividendNone = true;
-                return;
-        }
-
-        plusMoneyText.text = $"+ ${dealerController.Dividend(dividendMultiplier)}";
-    }
-    bool isDividendNone;
     bool IsGameFollow()
     {
-        if (isSurrender)
-        {
-
-        }
-        return !(playerController.Money < minBet && isDividendNone);
+        return playerController.Money + dealerController.Dividend >= minBet;
     }
     void GameOver()
     {
@@ -160,13 +108,13 @@ public class GameDirector : MonoBehaviour
     }
     public void Stand()
     {
-        if (!isSurrender)
+        if (!playerController.IsSurrender)
         {
             dealerController.DrawDealer();
         }
 
         Judgement();
-        DividendResult();
+        dealerController.DividendResult(judgeEnum);
 
         if (!IsGameFollow())
         {
@@ -178,11 +126,7 @@ public class GameDirector : MonoBehaviour
     {
         dealerController.DividendToPlayer();
 
-        isSurrender = false;
-        isDividendNone = false;
-
         judgementText.text = "";
-        plusMoneyText.text = "";
 
         trumpController.ResetCardsInfo();
         playerController.ResetCardsInfo();
