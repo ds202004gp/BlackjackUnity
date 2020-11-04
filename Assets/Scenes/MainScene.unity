@@ -3197,6 +3197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42bf4425977d08848a61c07fac5c5345, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterController: {fileID: 1761747840}
   blackjackOrBust: {fileID: 1565686619}
   characterTransform: {fileID: 1501686712}
   gameDirectorObject: {fileID: 426998832}
@@ -3907,6 +3908,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cdd94402eaece749946d292484d7c8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterController: {fileID: 1501686711}
   blackjackOrBust: {fileID: 402973566}
   characterTransform: {fileID: 1761747841}
   gameDirectorObject: {fileID: 426998832}
