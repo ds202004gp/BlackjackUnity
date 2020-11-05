@@ -73,6 +73,7 @@ public class PlayerController : CharacterBase
     {
         base.ResetCardsInfo();
         isSurrender = false;
+        maxBet = Mathf.Min(money, maxBet);
 
         while (money < bet)
         {
@@ -97,22 +98,18 @@ public class PlayerController : CharacterBase
         isSurrender = true;
         gameDirector.Stand();
     }
-    public void BetUpDown(bool IsUpDown)
+
+    bool canUp;
+    public bool CanUp { get => bet + minBet <= maxBet; }
+    bool canDown;
+    public bool CanDown { get => bet > minBet; }
+    public void BetUp()
     {
-        if (IsUpDown)
-        {
-            if (bet + minBet <= Mathf.Min(money, maxBet))
-            {
-                Bet += minBet;
-            }
-        }
-        else
-        {
-            if (bet > minBet)
-            {
-                Bet -= minBet;
-            }
-        }
+        Bet += minBet;
+    }
+    public void BetDown()
+    {
+        Bet -= minBet;
     }
     void ThrowBet()
     {

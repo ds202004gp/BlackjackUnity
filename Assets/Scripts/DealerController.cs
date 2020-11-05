@@ -63,7 +63,7 @@ public class DealerController : CharacterBase
     {
         switch (judgeEnum)
         {
-            case GameDirector.JudgeEnum.win:
+            case GameDirector.JudgeEnum.Win:
 
                 if (playerController.IsBlackjack)
                 {
@@ -77,13 +77,13 @@ public class DealerController : CharacterBase
                 dividendText.color = Color.yellow;
                 break;
 
-            case GameDirector.JudgeEnum.draw:
+            case GameDirector.JudgeEnum.Draw:
 
                 dividend = bet;
                 dividendText.color = Color.gray;
                 break;
 
-            case GameDirector.JudgeEnum.lose:
+            case GameDirector.JudgeEnum.Lose:
 
                 if (playerController.IsSurrender)
                 {

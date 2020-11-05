@@ -7,6 +7,9 @@ using UnityEngine.UI;
 public class ButtonController : MonoBehaviour
 {
     [SerializeField]
+    Button gotoVipRoomButton;
+
+    [SerializeField]
     Button gotoTitleButton;
 
     [SerializeField]
@@ -42,9 +45,9 @@ public class ButtonController : MonoBehaviour
     [SerializeField]
     DealerController dealerController;
 
-    // Start is called before the first frame update
-    void Start()
+    private void OnEnable()
     {
+        gotoVipRoomButton.onClick.AddListener(GotoVipRoom);
         gotoTitleButton.onClick.AddListener(GotoTitleButton);
         betUpButton.onClick.AddListener(BetUpButton);
         betDownButton.onClick.AddListener(BetDownButton);
@@ -57,17 +60,30 @@ public class ButtonController : MonoBehaviour
 
         StartWindowButtons();
     }
+
+    void GotoVipRoom()
+    {
+        gameDirector.gotoVipRoomPanel.SetActive(false);
+        RetryButton();
+    }
     void GotoTitleButton()
     {
         SceneManager.LoadScene("TitleScene");
     }
     void BetUpButton()
     {
-        playerController.BetUpDown(true);
+        playerController.BetUp();
+        CanBetUpDown();
     }
     void BetDownButton()
     {
-        playerController.BetUpDown(false);
+        playerController.BetDown();
+        CanBetUpDown();
+    }
+    void CanBetUpDown()
+    {
+        betUpButton.gameObject.SetActive(playerController.CanUp);
+        betDownButton.gameObject.SetActive(playerController.CanDown);
     }
     void StartButton()
     {
@@ -138,8 +154,7 @@ public class ButtonController : MonoBehaviour
         hitButton.gameObject.SetActive(false);
         surrenderButton.gameObject.SetActive(false);
         doubleDownButton.gameObject.SetActive(false);
-        betUpButton.gameObject.SetActive(true);
-        betDownButton.gameObject.SetActive(true);
+        CanBetUpDown();
     }
 
     void ResultWindowButtons()

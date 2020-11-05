@@ -11,12 +11,17 @@ public class GameDirector : MonoBehaviour
     GameObject gameOverPanel;
 
     [SerializeField]
+    public GameObject gotoVipRoomPanel;
+
+    [SerializeField]
     PlayerController playerController;
 
     [SerializeField]
     DealerController dealerController;
 
     TrumpController trumpController;
+
+    ButtonController buttonController;
 
     [SerializeField]
     Text judgementText;
@@ -46,10 +51,12 @@ public class GameDirector : MonoBehaviour
     void Start()
     {
         gameOverPanel.SetActive(false);
-        MaxBet = maxBet;
-        MinBet = minBet;
+
         trumpController = GetComponent<TrumpController>();
+        buttonController = GetComponent<ButtonController>();
+
         ResetField();
+        buttonController.enabled = true;
     }
 
     public void GameStart()
@@ -61,15 +68,15 @@ public class GameDirector : MonoBehaviour
     public JudgeEnum judgeEnum;
     public enum JudgeEnum
     {
-        win,
-        draw,
-        lose,
+        Win,
+        Draw,
+        Lose,
     }
     void Judgement()
     {
         if (playerController.IsSurrender)
         {
-            judgeEnum = JudgeEnum.lose;
+            judgeEnum = JudgeEnum.Lose;
             judgementText.text = "SURRENDER";
             judgementText.color = Color.blue;
             return;
@@ -80,30 +87,33 @@ public class GameDirector : MonoBehaviour
 
         if (playerScore > dealerScore)
         {
-            judgeEnum = JudgeEnum.win;
+            judgeEnum = JudgeEnum.Win;
             judgementText.text = "WIN!!";
             judgementText.color = Color.yellow;
         }
         else if (playerScore == dealerScore)
         {
-            judgeEnum = JudgeEnum.draw;
+            judgeEnum = JudgeEnum.Draw;
             judgementText.text = "DRAW";
             judgementText.color = Color.grey;
         }
         else if (playerScore < dealerScore)
         {
-            judgeEnum = JudgeEnum.lose;
+            judgeEnum = JudgeEnum.Lose;
             judgementText.text = "LOSE...";
             judgementText.color = Color.blue;
         }
     }
 
+    int playersMoney;
     bool IsGameFollow()
     {
-        return playerController.Money + dealerController.Dividend >= minBet;
+        playersMoney = playerController.Money + dealerController.Dividend;
+        return playersMoney >= minBet;
     }
     void GameOver()
     {
+        stageEnum = StageEnum.Normal;
         gameOverPanel.SetActive(true);
     }
     public void Stand()
@@ -120,16 +130,59 @@ public class GameDirector : MonoBehaviour
         {
             GameOver();
         }
-    }
 
+        if (stageEnum == StageEnum.Vip)
+        {
+            return;
+        }
+
+        if (playersMoney >= gotoVipScore)
+        {
+            stageEnum = StageEnum.Vip;
+            gotoVipRoomPanel.SetActive(true);
+        }
+    }
+    [SerializeField]
+    int gotoVipScore;
     public void ResetField()
     {
         dealerController.DividendToPlayer();
 
+        BetLimit();
         judgementText.text = "";
 
         trumpController.ResetCardsInfo();
         playerController.ResetCardsInfo();
         dealerController.ResetCardsInfo();
+    }
+    public static StageEnum stageEnum;
+    public enum StageEnum
+    {
+        Normal,
+        Vip,
+    }
+    void BackGround()
+    {
+        if (stageEnum == StageEnum.Normal)
+        {
+
+        }
+        else if (stageEnum == StageEnum.Vip)
+        {
+
+        }
+    }
+    void BetLimit()
+    {
+        if (stageEnum == StageEnum.Normal)
+        {
+            MinBet = minBet;
+            MaxBet = maxBet;
+        }
+        else if (stageEnum == StageEnum.Vip)
+        {
+            MinBet = dealerController.Bet;
+            MaxBet = minBet * 10;
+        }
     }
 }
