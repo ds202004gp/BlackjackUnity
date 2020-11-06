@@ -11,7 +11,7 @@ public class DealerController : CharacterBase
     [SerializeField]
     Text dividendText;
 
-    int bet;
+    static int bet;
     public int Bet { get => bet; set => bet = value; }
 
     protected override void Awake()

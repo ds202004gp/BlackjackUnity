@@ -11,7 +11,7 @@ public class GameDirector : MonoBehaviour
     GameObject gameOverPanel;
 
     [SerializeField]
-    public GameObject gotoVipRoomPanel;
+    public GameObject gameClearPanel;
 
     [SerializeField]
     PlayerController playerController;
@@ -51,11 +51,13 @@ public class GameDirector : MonoBehaviour
     void Start()
     {
         gameOverPanel.SetActive(false);
+        BackGround();
 
         trumpController = GetComponent<TrumpController>();
         buttonController = GetComponent<ButtonController>();
 
         ResetField();
+        playerController.Bet = minBet;
         buttonController.enabled = true;
     }
 
@@ -139,9 +141,10 @@ public class GameDirector : MonoBehaviour
         if (playersMoney >= gotoVipScore)
         {
             stageEnum = StageEnum.Vip;
-            gotoVipRoomPanel.SetActive(true);
+            gameClearPanel.SetActive(true);
         }
     }
+
     [SerializeField]
     int gotoVipScore;
     public void ResetField()
@@ -161,16 +164,15 @@ public class GameDirector : MonoBehaviour
         Normal,
         Vip,
     }
+    [SerializeField]
+    GameObject normalBackGround;
+
+    [SerializeField]
+    GameObject vipBackGround;
     void BackGround()
     {
-        if (stageEnum == StageEnum.Normal)
-        {
-
-        }
-        else if (stageEnum == StageEnum.Vip)
-        {
-
-        }
+        normalBackGround.SetActive(stageEnum == StageEnum.Normal);
+        vipBackGround.SetActive(stageEnum == StageEnum.Vip);
     }
     void BetLimit()
     {
@@ -183,6 +185,17 @@ public class GameDirector : MonoBehaviour
         {
             MinBet = dealerController.Bet;
             MaxBet = minBet * 10;
+        }
+    }
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
         }
     }
 }

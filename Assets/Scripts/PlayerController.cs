@@ -39,7 +39,7 @@ public class PlayerController : CharacterBase
 
     [SerializeField]
     int bet;
-    int Bet
+    public int Bet
     {
         get => bet;
         set
@@ -59,7 +59,6 @@ public class PlayerController : CharacterBase
     {
         base.Awake();
         dealerController = characterController.GetComponent<DealerController>();
-        Bet = bet;
         Money = money;
     }
     public override void GameStart()

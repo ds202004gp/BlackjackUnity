@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/GotoVipRoomScene.unity
+    guid: e01463e64a0c1534dafde300fa53d011
   m_configObjects: {}

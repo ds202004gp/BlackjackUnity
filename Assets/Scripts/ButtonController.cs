@@ -63,8 +63,7 @@ public class ButtonController : MonoBehaviour
 
     void GotoVipRoom()
     {
-        gameDirector.gotoVipRoomPanel.SetActive(false);
-        RetryButton();
+        SceneManager.LoadScene("GotoVipRoomScene");
     }
     void GotoTitleButton()
     {

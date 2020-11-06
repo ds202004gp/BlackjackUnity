@@ -755,14 +755,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameOverPanel: {fileID: 469552752}
-  gotoVipRoomPanel: {fileID: 1263637510}
+  gameClearPanel: {fileID: 1263637510}
   playerController: {fileID: 1761747842}
   dealerController: {fileID: 1501686713}
   judgementText: {fileID: 1793123173}
-  maxBet: 50
-  minBet: 5
+  maxBet: 500
+  minBet: 50
   judgeEnum: 0
-  gotoVipScore: 150
+  gotoVipScore: 10000
+  normalBackGround: {fileID: 1411930778}
+  vipBackGround: {fileID: 380953065}
 --- !u!4 &426998836
 Transform:
   m_ObjectHideFlags: 0
@@ -2540,7 +2542,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -70}
-  m_SizeDelta: {x: 150, y: 35}
+  m_SizeDelta: {x: 200, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1239120461
 MonoBehaviour:
@@ -2635,7 +2637,7 @@ GameObject:
   - component: {fileID: 1263637512}
   - component: {fileID: 1263637511}
   m_Layer: 5
-  m_Name: GotoVipRoomCanvas
+  m_Name: GameClearCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3609,7 +3611,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -70}
-  m_SizeDelta: {x: 150, y: 35}
+  m_SizeDelta: {x: 200, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1495587892
 MonoBehaviour:
@@ -4457,9 +4459,9 @@ MonoBehaviour:
     type: 3}
   direction: 0.5
   moneyText: {fileID: 270666483}
-  money: 100
+  money: 1000
   betText: {fileID: 1318450881}
-  bet: 10
+  bet: 0
 --- !u!1 &1764622769
 GameObject:
   m_ObjectHideFlags: 0
@@ -4496,8 +4498,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 50}
-  m_SizeDelta: {x: 750, y: 200}
+  m_AnchoredPosition: {x: 0, y: 10}
+  m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1764622771
 MonoBehaviour:
@@ -4561,9 +4563,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'CONGRATULATIONS!
-
-    GO TO VIPROOM!!'
+  m_Text: GAME CLEAR!!
 --- !u!222 &1764622774
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4902,7 +4902,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 10}
   m_SizeDelta: {x: 400, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1889172325
