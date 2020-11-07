@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class GameDirector : MonoBehaviour
@@ -11,7 +7,7 @@ public class GameDirector : MonoBehaviour
     GameObject gameOverPanel;
 
     [SerializeField]
-    public GameObject gameClearPanel;
+    GameObject gameClearPanel;
 
     [SerializeField]
     PlayerController playerController;
@@ -50,13 +46,15 @@ public class GameDirector : MonoBehaviour
 
     void Start()
     {
+        gameClearPanel.SetActive(false);
         gameOverPanel.SetActive(false);
-        BackGround();
 
         trumpController = GetComponent<TrumpController>();
         buttonController = GetComponent<ButtonController>();
 
+        BackGround();
         ResetField();
+
         playerController.Bet = minBet;
         buttonController.enabled = true;
     }
@@ -74,6 +72,8 @@ public class GameDirector : MonoBehaviour
         Draw,
         Lose,
     }
+    int playerScore;
+    int dealerScore;
     void Judgement()
     {
         if (playerController.IsSurrender)
@@ -84,8 +84,8 @@ public class GameDirector : MonoBehaviour
             return;
         }
 
-        int playerScore = playerController.GetScore();
-        int dealerScore = dealerController.GetScore();
+        playerScore = playerController.GetScore();
+        dealerScore = dealerController.GetScore();
 
         if (playerScore > dealerScore)
         {
@@ -118,6 +118,8 @@ public class GameDirector : MonoBehaviour
         stageEnum = StageEnum.Normal;
         gameOverPanel.SetActive(true);
     }
+    [SerializeField]
+    int gameClearMoney = 10000;
     public void Stand()
     {
         if (!playerController.IsSurrender)
@@ -138,15 +140,13 @@ public class GameDirector : MonoBehaviour
             return;
         }
 
-        if (playersMoney >= gotoVipScore)
+        if (playersMoney >= gameClearMoney)
         {
             stageEnum = StageEnum.Vip;
             gameClearPanel.SetActive(true);
         }
     }
 
-    [SerializeField]
-    int gotoVipScore;
     public void ResetField()
     {
         dealerController.DividendToPlayer();

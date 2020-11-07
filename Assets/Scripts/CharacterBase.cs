@@ -99,10 +99,12 @@ public class CharacterBase : MonoBehaviour
         characterCardSprites.Add(card);
     }
 
+    int score;
+    int aceCount;
     bool CharacterScoreSum()
     {
-        int score = 0;
-        int aceCount = 0;
+        score = 0;
+        aceCount = 0;
 
         foreach (Card card in characterCards)
         {
@@ -127,6 +129,7 @@ public class CharacterBase : MonoBehaviour
     public bool IsBlackjack { get => isBlackjack; }
 
     bool isBust;
+    public bool IsBust { get => isBust; }
 
     protected void ShowCharacterScore()
     {
@@ -143,6 +146,7 @@ public class CharacterBase : MonoBehaviour
             blackjackOrBust.text = "BUST...";
             blackjackOrBust.color = Color.blue;
         }
+
         scoreText.text = $"{characterScore}";
     }
     public int GetScore()

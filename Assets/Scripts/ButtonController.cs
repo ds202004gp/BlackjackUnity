@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -84,25 +82,20 @@ public class ButtonController : MonoBehaviour
         betUpButton.gameObject.SetActive(playerController.CanUp);
         betDownButton.gameObject.SetActive(playerController.CanDown);
     }
+
+    bool canDoubleDown;
     void StartButton()
     {
         gameDirector.GameStart();
+
+        canDoubleDown = playerController.Money - dealerController.Bet >= 0;
 
         startButton.gameObject.SetActive(false);
         standButton.gameObject.SetActive(true);
         retryButton.gameObject.SetActive(false);
         hitButton.gameObject.SetActive(true);
         surrenderButton.gameObject.SetActive(true);
-
-        if (playerController.Money - dealerController.Bet >= 0)
-        {
-            doubleDownButton.gameObject.SetActive(true);
-        }
-        else
-        {
-            doubleDownButton.gameObject.SetActive(false);
-        }
-
+        doubleDownButton.gameObject.SetActive(canDoubleDown);
         betUpButton.gameObject.SetActive(false);
         betDownButton.gameObject.SetActive(false);
     }
@@ -122,11 +115,7 @@ public class ButtonController : MonoBehaviour
     {
         playerController.Hit();
 
-        if (playerController.GetScore() == 0)
-        {
-            hitButton.gameObject.SetActive(false);
-        }
-
+        hitButton.gameObject.SetActive(!playerController.IsBust);
         surrenderButton.gameObject.SetActive(false);
         doubleDownButton.gameObject.SetActive(false);
     }

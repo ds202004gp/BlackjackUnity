@@ -466,7 +466,7 @@ GameObject:
   - component: {fileID: 380953067}
   - component: {fileID: 380953066}
   m_Layer: 0
-  m_Name: BlackjackGameOverBackGround
+  m_Name: BlackjackVipRoomBackGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -510,7 +510,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: -2871340974906642866, guid: 80de1e8abf348db4e8a5c2fc8b684cf7,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -762,7 +762,7 @@ MonoBehaviour:
   maxBet: 500
   minBet: 50
   judgeEnum: 0
-  gotoVipScore: 10000
+  gameClearMoney: 10000
   normalBackGround: {fileID: 1411930778}
   vipBackGround: {fileID: 380953065}
 --- !u!4 &426998836
@@ -2162,7 +2162,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 6535516786657457874, guid: 80de1e8abf348db4e8a5c2fc8b684cf7,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
