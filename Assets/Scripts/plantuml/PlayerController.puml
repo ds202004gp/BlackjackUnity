@@ -1,9 +1,0 @@
-@startuml
-class PlayerController {
-    + <<override>> GameStart() : void
-    + Hit() : void
-    + DoubleDown() : void
-    + Surrender() : void
-}
-CharacterBase <|-- PlayerController
-@enduml

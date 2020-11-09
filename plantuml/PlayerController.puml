@@ -1,0 +1,26 @@
+@startuml
+class PlayerController {
+    money : int
+    + Money : int <<get>> <<set>>
+    bet : int
+    + Bet : int <<get>> <<set>>
+    + MaxBet : int <<set>>
+    + MinBet : int <<set>>
+    # <<override>> Awake() : void
+    + <<override>> GameStart() : void
+    + <<override>> ResetCardsInfo() : void
+    + Hit() : void
+    + DoubleDown() : void
+    + IsSurrender : bool <<get>>
+    + Surrender() : void
+    + CanUp : bool <<get>>
+    + CanDown : bool <<get>>
+    + BetUp() : void
+    + BetDown() : void
+    ThrowBet() : void
+}
+CharacterBase <|-- PlayerController
+PlayerController --> "dealerController" DealerController
+PlayerController --> "moneyText" Text
+PlayerController --> "betText" Text
+@enduml

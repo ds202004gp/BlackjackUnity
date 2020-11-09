@@ -759,8 +759,10 @@ MonoBehaviour:
   playerController: {fileID: 1761747842}
   dealerController: {fileID: 1501686713}
   judgementText: {fileID: 1793123173}
+  dividendText: {fileID: 1135147145}
   maxBet: 500
   minBet: 50
+  defaultPlayersMoney: 1000
   judgeEnum: 0
   gameClearMoney: 10000
   normalBackGround: {fileID: 1411930778}
@@ -2485,7 +2487,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 18
+    m_FontSize: 16
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -2877,11 +2879,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 18
+    m_FontSize: 16
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 119
+    m_MaxSize: 176
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -3746,7 +3748,6 @@ MonoBehaviour:
   cardPrefab: {fileID: 2121394661423363319, guid: cf11e65d0f28df6448ddb3b09bddbd88,
     type: 3}
   direction: -0.5
-  dividendText: {fileID: 1135147145}
 --- !u!1 &1565686616
 GameObject:
   m_ObjectHideFlags: 0
@@ -4459,7 +4460,6 @@ MonoBehaviour:
     type: 3}
   direction: 0.5
   moneyText: {fileID: 270666483}
-  money: 1000
   betText: {fileID: 1318450881}
   bet: 0
 --- !u!1 &1764622769

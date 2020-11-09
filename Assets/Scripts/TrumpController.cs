@@ -31,7 +31,7 @@ public class TrumpController : MonoBehaviour
             }
             else if (i < 27)
             {
-                orderCards.Add(new Daia(trump[i], i - 13));
+                orderCards.Add(new Diamond(trump[i], i - 13));
             }
             else if (i < 40)
             {
@@ -112,10 +112,10 @@ public class Clover : Card
         Suit = "Clover";
     }
 }
-public class Daia : Card
+public class Diamond : Card
 {
-    public Daia(Sprite sprite, int number) : base(sprite, number)
+    public Diamond(Sprite sprite, int number) : base(sprite, number)
     {
-        Suit = "Daia";
+        Suit = "Diamond";
     }
 }

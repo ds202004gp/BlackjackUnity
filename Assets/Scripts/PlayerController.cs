@@ -3,13 +3,10 @@ using UnityEngine.UI;
 
 public class PlayerController : CharacterBase
 {
-    DealerController dealerController;
-
     [SerializeField]
     Text moneyText;
 
-    [SerializeField]
-    int money;
+    static int money;
     public int Money
     {
         get => money;
@@ -46,34 +43,30 @@ public class PlayerController : CharacterBase
         }
     }
 
-    int maxBet;
-    public int MaxBet { set => maxBet = value; }
-
-    int minBet;
-    public int MinBet { set => minBet = value; }
+    public int MaxBet { private get; set; }
+    public int MinBet { private get; set; }
 
     protected override void Awake()
     {
         base.Awake();
-        dealerController = characterController.GetComponent<DealerController>();
         Money = money;
     }
     public override void GameStart()
     {
         base.GameStart();
-        ThrowBet();
+        gameDirector.BetToDealer(bet);
         ShowCharacterCards();
         ShowCharacterScore();
     }
     public override void ResetCardsInfo()
     {
         base.ResetCardsInfo();
-        isSurrender = false;
-        maxBet = Mathf.Min(money, maxBet);
+        IsSurrender = false;
+        MaxBet = Mathf.Min(money, MaxBet);
 
         while (money < bet)
         {
-            Bet -= minBet;
+            Bet -= MinBet;
         }
     }
     public void Hit()
@@ -84,32 +77,23 @@ public class PlayerController : CharacterBase
     }
     public void DoubleDown()
     {
-        ThrowBet();
+        gameDirector.BetToDealer(bet);
         Hit();
     }
-    bool isSurrender;
-    public bool IsSurrender { get => isSurrender; }
+    public bool IsSurrender { get; private set; }
     public void Surrender()
     {
-        isSurrender = true;
-        gameDirector.Stand();
+        IsSurrender = true;
     }
 
-    bool canUp;
-    public bool CanUp { get => bet + minBet <= maxBet; }
-    bool canDown;
-    public bool CanDown { get => bet > minBet; }
+    public bool CanUp { get => bet + MinBet <= MaxBet; }
+    public bool CanDown { get => bet > MinBet; }
     public void BetUp()
     {
-        Bet += minBet;
+        Bet += MinBet;
     }
     public void BetDown()
     {
-        Bet -= minBet;
-    }
-    void ThrowBet()
-    {
-        Money -= bet;
-        dealerController.Bet += bet;
+        Bet -= MinBet;
     }
 }

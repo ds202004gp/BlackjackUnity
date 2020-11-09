@@ -1,8 +1,0 @@
-@startuml
-class DealerController {
-    + <<override>> GameStart() : void
-    UpCard() : void
-    + DrawDealer() : void
-}
-CharacterBase <|-- DealerController
-@enduml

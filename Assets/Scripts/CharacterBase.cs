@@ -52,8 +52,8 @@ public class CharacterBase : MonoBehaviour
     }
     public virtual void ResetCardsInfo()
     {
-        isBlackjack = false;
-        isBust = false;
+        IsBlackjack = false;
+        IsBust = false;
         blackjackOrBust.text = "";
         characterCards = new List<Card>();
         ShowCharacterScore();
@@ -125,23 +125,20 @@ public class CharacterBase : MonoBehaviour
         return score == 21 && characterCards.Count == 2;
     }
 
-    bool isBlackjack;
-    public bool IsBlackjack { get => isBlackjack; }
-
-    bool isBust;
-    public bool IsBust { get => isBust; }
+    public bool IsBlackjack { get; private set; }
+    public bool IsBust { get; private set; }
 
     protected void ShowCharacterScore()
     {
-        isBlackjack = CharacterScoreSum();
-        isBust = characterScore > 21;
+        IsBlackjack = CharacterScoreSum();
+        IsBust = characterScore > 21;
 
-        if (isBlackjack)
+        if (IsBlackjack)
         {
             blackjackOrBust.text = "BLACKJACK!!";
             blackjackOrBust.color = Color.yellow;
         }
-        else if (isBust)
+        else if (IsBust)
         {
             blackjackOrBust.text = "BUST...";
             blackjackOrBust.color = Color.blue;
@@ -151,8 +148,8 @@ public class CharacterBase : MonoBehaviour
     }
     public int GetScore()
     {
-        if (isBlackjack) return 22;
+        if (IsBlackjack) return 22;
 
-        return isBust ? 0 : characterScore;
+        return IsBust ? 0 : characterScore;
     }
 }

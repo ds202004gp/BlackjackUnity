@@ -1,0 +1,45 @@
+@startuml
+class GameDirector {
+    maxBet : int
+    MaxBet : int <<set>>
+    minBet : int
+    MinBet : int <<set>>
+    Start() : void
+    + GameStart() : void
+    playerScore : int
+    dealerScore : int
+    Judgement() : void
+    playersMoney : int
+    IsGameFollow() : bool
+    GameOver() : void
+    gameClearMoney : int = 10000
+    + Stand() : void
+    + ResetField() : void
+    BackGround() : void
+    BetLimit() : void
+    Update() : void
+}
+enum JudgeEnum {
+    Win,
+    Draw,
+    Lose,
+}
+enum StageEnum {
+    Normal,
+    Vip,
+}
+MonoBehaviour <|-- GameDirector
+GameDirector --> "gameOverPanel" GameObject
+GameDirector --> "gameClearPanel" GameObject
+GameDirector --> "playerController" PlayerController
+GameDirector --> "dealerController" DealerController
+GameDirector --> "trumpController" TrumpController
+GameDirector --> "buttonController" ButtonController
+GameDirector --> "judgementText" Text
+GameDirector --> "judgeEnum" JudgeEnum
+GameDirector --> "stageEnum" StageEnum
+GameDirector --> "normalBackGround" GameObject
+GameDirector --> "vipBackGround" GameObject
+GameDirector +-- JudgeEnum
+GameDirector +-- StageEnum
+@enduml

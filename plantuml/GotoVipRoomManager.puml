@@ -1,0 +1,12 @@
+@startuml
+class GotoVipRoomManager {
+    Start() : void
+    RuleDescription() : void
+    GotoVipRoom() : void
+}
+MonoBehaviour <|-- GotoVipRoomManager
+GotoVipRoomManager --> "ruleDescriptionButton" Button
+GotoVipRoomManager --> "gotoVipRoomButton" Button
+GotoVipRoomManager --> "vipRoomText" GameObject
+GotoVipRoomManager --> "vipRoomRuleText" GameObject
+@enduml

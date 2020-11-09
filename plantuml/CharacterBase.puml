@@ -1,0 +1,33 @@
+@startuml
+class CharacterBase {
+    # characterScore : int
+    direction : float
+    # <<virtual>> Awake() : void
+    + <<virtual>> GameStart() : void
+    + <<virtual>> ResetCardsInfo() : void
+    CharacterCardSpritesReset() : void
+    # AddCharacterCards(card:Card) : void
+    # ShowCharacterCards() : void
+    CharacterCardSpritesAdd(cardPos:Vector2) : void
+    score : int
+    aceCount : int
+    CharacterScoreSum() : bool
+    + IsBlackjack : bool <<get>>
+    + IsBust : bool <<get>>
+    # ShowCharacterScore() : void
+    + GetScore() : int
+}
+class "List`1"<T> {
+}
+MonoBehaviour <|-- CharacterBase
+CharacterBase --> "characterController" GameObject
+CharacterBase --> "blackjackOrBust" Text
+CharacterBase --> "characterTransform" Transform
+CharacterBase --> "gameDirectorObject" GameObject
+CharacterBase --> "gameDirector" GameDirector
+CharacterBase --> "trumpController" TrumpController
+CharacterBase --> "scoreText" Text
+CharacterBase --> "characterCards<Card>" "List`1"
+CharacterBase --> "characterCardSprites<SpriteRenderer>" "List`1"
+CharacterBase --> "cardPrefab" SpriteRenderer
+@enduml

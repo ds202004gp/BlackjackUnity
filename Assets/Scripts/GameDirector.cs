@@ -23,6 +23,9 @@ public class GameDirector : MonoBehaviour
     Text judgementText;
 
     [SerializeField]
+    Text dividendText;
+
+    [SerializeField]
     int maxBet;
     int MaxBet
     {
@@ -44,6 +47,9 @@ public class GameDirector : MonoBehaviour
         }
     }
 
+    [SerializeField]
+    int defaultPlayersMoney;
+
     void Start()
     {
         gameClearPanel.SetActive(false);
@@ -52,10 +58,14 @@ public class GameDirector : MonoBehaviour
         trumpController = GetComponent<TrumpController>();
         buttonController = GetComponent<ButtonController>();
 
+        if (stageEnum == StageEnum.Normal)
+            playerController.Money = defaultPlayersMoney;
+
+        playerController.Bet = minBet;
+
         BackGround();
         ResetField();
 
-        playerController.Bet = minBet;
         buttonController.enabled = true;
     }
 
@@ -106,6 +116,46 @@ public class GameDirector : MonoBehaviour
             judgementText.color = Color.blue;
         }
     }
+    float dividendMultiplier;
+    void DividendResult()
+    {
+        switch (judgeEnum)
+        {
+            case JudgeEnum.Win:
+
+                if (playerController.IsBlackjack)
+                {
+                    dividendMultiplier = 2.5f;
+                }
+                else
+                {
+                    dividendMultiplier = 2;
+                }
+
+                dividendText.color = Color.yellow;
+                break;
+
+            case JudgeEnum.Draw:
+
+                dividendMultiplier = 1;
+                dividendText.color = Color.grey;
+                break;
+
+            case JudgeEnum.Lose:
+
+                if (!playerController.IsSurrender)
+                {
+                    return;
+                }
+
+                dividendMultiplier = 0.5f;
+                dividendText.color = Color.blue;
+                break;
+        }
+
+        dealerController.DividendMultiplier = dividendMultiplier;
+        dividendText.text = $"+ ${dealerController.Dividend}";
+    }
 
     int playersMoney;
     bool IsGameFollow()
@@ -128,7 +178,7 @@ public class GameDirector : MonoBehaviour
         }
 
         Judgement();
-        dealerController.DividendResult(judgeEnum);
+        DividendResult();
 
         if (!IsGameFollow())
         {
@@ -146,20 +196,29 @@ public class GameDirector : MonoBehaviour
             gameClearPanel.SetActive(true);
         }
     }
-
+    void DividendToPlayer()
+    {
+        playerController.Money += dealerController.Dividend;
+    }
+    public void BetToDealer(int bet)
+    {
+        playerController.Money -= bet;
+        dealerController.Bet += bet;
+    }
     public void ResetField()
     {
-        dealerController.DividendToPlayer();
-
+        DividendToPlayer();
         BetLimit();
+
         judgementText.text = "";
+        dividendText.text = "";
 
         trumpController.ResetCardsInfo();
         playerController.ResetCardsInfo();
         dealerController.ResetCardsInfo();
     }
-    public static StageEnum stageEnum;
-    public enum StageEnum
+    static StageEnum stageEnum;
+    enum StageEnum
     {
         Normal,
         Vip,

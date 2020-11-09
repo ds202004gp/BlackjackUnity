@@ -131,6 +131,7 @@ public class ButtonController : MonoBehaviour
     {
         playerController.Surrender();
 
+        gameDirector.Stand();
         ResultWindowButtons();
     }
 

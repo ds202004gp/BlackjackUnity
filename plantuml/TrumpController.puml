@@ -7,8 +7,11 @@ class TrumpController {
     ConvertNumberForBlackjack(card:Card) : void
 }
 class Card {
+    - number : int
+    - suit : string
     + Number : int <<get>> <<set>>
     + Suit : string <<get>> <<set>>
+    # Card(sprite:Sprite, number:int)
 }
 class Hart {
     + Hart(sprite:Sprite, number:int)
@@ -19,8 +22,8 @@ class Spade {
 class Clover {
     + Clover(sprite:Sprite, number:int)
 }
-class Daia {
-    + Daia(sprite:Sprite, number:int)
+class Diamond {
+    + Diamond(sprite:Sprite, number:int)
 }
 class "List`1"<T> {
 }
@@ -28,11 +31,13 @@ class "Stack`1"<T> {
 }
 MonoBehaviour <|-- TrumpController
 TrumpController --> "back" Sprite
+TrumpController --> "Back" Sprite
 TrumpController --> "orderCards<Card>" "List`1"
 TrumpController --> "playingCards<Card>" "Stack`1"
+Card --> "sprite" Sprite
 Card --> "Sprite" Sprite
 Card <|-- Hart
 Card <|-- Spade
 Card <|-- Clover
-Card <|-- Daia
+Card <|-- Diamond
 @enduml

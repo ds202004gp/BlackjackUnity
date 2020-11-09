@@ -1,14 +1,26 @@
 @startuml
 class ButtonController {
-    Start() : void
+    - OnEnable() : void
+    GotoVipRoom() : void
+    GotoTitleButton() : void
+    BetUpButton() : void
+    BetDownButton() : void
+    CanBetUpDown() : void
+    canDoubleDown : bool
     StartButton() : void
     StandButton() : void
     RetryButton() : void
     HitButton() : void
     DoubleDownButton() : void
     SurrenderButton() : void
+    StartWindowButtons() : void
+    ResultWindowButtons() : void
 }
 MonoBehaviour <|-- ButtonController
+ButtonController --> "gotoVipRoomButton" Button
+ButtonController --> "gotoTitleButton" Button
+ButtonController --> "betUpButton" Button
+ButtonController --> "betDownButton" Button
 ButtonController --> "startButton" Button
 ButtonController --> "standButton" Button
 ButtonController --> "retryButton" Button

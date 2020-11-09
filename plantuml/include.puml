@@ -1,0 +1,208 @@
+@startuml
+class ButtonController {
+    - OnEnable() : void
+    GotoVipRoom() : void
+    GotoTitleButton() : void
+    BetUpButton() : void
+    BetDownButton() : void
+    CanBetUpDown() : void
+    canDoubleDown : bool
+    StartButton() : void
+    StandButton() : void
+    RetryButton() : void
+    HitButton() : void
+    DoubleDownButton() : void
+    SurrenderButton() : void
+    StartWindowButtons() : void
+    ResultWindowButtons() : void
+}
+MonoBehaviour <|-- ButtonController
+ButtonController --> "gotoVipRoomButton" Button
+ButtonController --> "gotoTitleButton" Button
+ButtonController --> "betUpButton" Button
+ButtonController --> "betDownButton" Button
+ButtonController --> "startButton" Button
+ButtonController --> "standButton" Button
+ButtonController --> "retryButton" Button
+ButtonController --> "hitButton" Button
+ButtonController --> "doubleDownButton" Button
+ButtonController --> "surrenderButton" Button
+ButtonController --> "gameDirector" GameDirector
+ButtonController --> "playerController" PlayerController
+ButtonController --> "dealerController" DealerController
+class CharacterBase {
+    # characterScore : int
+    direction : float
+    # <<virtual>> Awake() : void
+    + <<virtual>> GameStart() : void
+    + <<virtual>> ResetCardsInfo() : void
+    CharacterCardSpritesReset() : void
+    # AddCharacterCards(card:Card) : void
+    # ShowCharacterCards() : void
+    CharacterCardSpritesAdd(cardPos:Vector2) : void
+    score : int
+    aceCount : int
+    CharacterScoreSum() : bool
+    + IsBlackjack : bool <<get>>
+    + IsBust : bool <<get>>
+    # ShowCharacterScore() : void
+    + GetScore() : int
+}
+class "List`1"<T> {
+}
+MonoBehaviour <|-- CharacterBase
+CharacterBase --> "characterController" GameObject
+CharacterBase --> "blackjackOrBust" Text
+CharacterBase --> "characterTransform" Transform
+CharacterBase --> "gameDirectorObject" GameObject
+CharacterBase --> "gameDirector" GameDirector
+CharacterBase --> "trumpController" TrumpController
+CharacterBase --> "scoreText" Text
+CharacterBase --> "characterCards<Card>" "List`1"
+CharacterBase --> "characterCardSprites<SpriteRenderer>" "List`1"
+CharacterBase --> "cardPrefab" SpriteRenderer
+class DealerController {
+    {static} bet : int
+    + Bet : int <<get>> <<set>>
+    # <<override>> Awake() : void
+    + <<override>> GameStart() : void
+    + <<override>> ResetCardsInfo() : void
+    UpCard() : void
+    + DrawDealer() : void
+    + Dividend : int <<get>>
+    + DividendToPlayer() : void
+    + DividendResult(judgeEnum:GameDirector.JudgeEnum) : void
+}
+CharacterBase <|-- DealerController
+DealerController --> "playerController" PlayerController
+DealerController --> "dividendText" Text
+class GameDirector {
+    maxBet : int
+    MaxBet : int <<set>>
+    minBet : int
+    MinBet : int <<set>>
+    Start() : void
+    + GameStart() : void
+    playerScore : int
+    dealerScore : int
+    Judgement() : void
+    playersMoney : int
+    IsGameFollow() : bool
+    GameOver() : void
+    gameClearMoney : int = 10000
+    + Stand() : void
+    + ResetField() : void
+    BackGround() : void
+    BetLimit() : void
+    Update() : void
+}
+enum JudgeEnum {
+    Win,
+    Draw,
+    Lose,
+}
+enum StageEnum {
+    Normal,
+    Vip,
+}
+MonoBehaviour <|-- GameDirector
+GameDirector --> "gameOverPanel" GameObject
+GameDirector --> "gameClearPanel" GameObject
+GameDirector --> "playerController" PlayerController
+GameDirector --> "dealerController" DealerController
+GameDirector --> "trumpController" TrumpController
+GameDirector --> "buttonController" ButtonController
+GameDirector --> "judgementText" Text
+GameDirector --> "judgeEnum" JudgeEnum
+GameDirector --> "stageEnum" StageEnum
+GameDirector --> "normalBackGround" GameObject
+GameDirector --> "vipBackGround" GameObject
+GameDirector +-- JudgeEnum
+GameDirector +-- StageEnum
+class GotoVipRoomManager {
+    Start() : void
+    RuleDescription() : void
+    GotoVipRoom() : void
+}
+MonoBehaviour <|-- GotoVipRoomManager
+GotoVipRoomManager --> "ruleDescriptionButton" Button
+GotoVipRoomManager --> "gotoVipRoomButton" Button
+GotoVipRoomManager --> "vipRoomText" GameObject
+GotoVipRoomManager --> "vipRoomRuleText" GameObject
+class PlayerController {
+    money : int
+    + Money : int <<get>> <<set>>
+    bet : int
+    + Bet : int <<get>> <<set>>
+    + MaxBet : int <<set>>
+    + MinBet : int <<set>>
+    # <<override>> Awake() : void
+    + <<override>> GameStart() : void
+    + <<override>> ResetCardsInfo() : void
+    + Hit() : void
+    + DoubleDown() : void
+    + IsSurrender : bool <<get>>
+    + Surrender() : void
+    + CanUp : bool <<get>>
+    + CanDown : bool <<get>>
+    + BetUp() : void
+    + BetDown() : void
+    ThrowBet() : void
+}
+CharacterBase <|-- PlayerController
+PlayerController --> "dealerController" DealerController
+PlayerController --> "moneyText" Text
+PlayerController --> "betText" Text
+class TitleManager {
+    Start() : void
+    GotoMain() : void
+    GameRule() : void
+    BackToTitle() : void
+}
+MonoBehaviour <|-- TitleManager
+TitleManager --> "gotoMainButton" Button
+TitleManager --> "gameRuleButton" Button
+TitleManager --> "backToTitleButton" Button
+TitleManager --> "gameRulePanel" GameObject
+class TrumpController {
+    + ResetCardsInfo() : void
+    CreateCards() : void
+    ShuffleCards() : void
+    + DrawCard() : Card
+    ConvertNumberForBlackjack(card:Card) : void
+}
+class Card {
+    - number : int
+    - suit : string
+    + Number : int <<get>> <<set>>
+    + Suit : string <<get>> <<set>>
+    # Card(sprite:Sprite, number:int)
+}
+class Hart {
+    + Hart(sprite:Sprite, number:int)
+}
+class Spade {
+    + Spade(sprite:Sprite, number:int)
+}
+class Clover {
+    + Clover(sprite:Sprite, number:int)
+}
+class Diamond {
+    + Diamond(sprite:Sprite, number:int)
+}
+class "List`1"<T> {
+}
+class "Stack`1"<T> {
+}
+MonoBehaviour <|-- TrumpController
+TrumpController --> "back" Sprite
+TrumpController --> "Back" Sprite
+TrumpController --> "orderCards<Card>" "List`1"
+TrumpController --> "playingCards<Card>" "Stack`1"
+Card --> "sprite" Sprite
+Card --> "Sprite" Sprite
+Card <|-- Hart
+Card <|-- Spade
+Card <|-- Clover
+Card <|-- Diamond
+@enduml
