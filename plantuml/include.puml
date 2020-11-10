@@ -64,33 +64,34 @@ CharacterBase --> "cardPrefab" SpriteRenderer
 class DealerController {
     {static} bet : int
     + Bet : int <<get>> <<set>>
-    # <<override>> Awake() : void
+    + DividendMultiplier : float <<set>>
+    + Dividend : int <<get>>
     + <<override>> GameStart() : void
     + <<override>> ResetCardsInfo() : void
     UpCard() : void
     + DrawDealer() : void
-    + Dividend : int <<get>>
-    + DividendToPlayer() : void
-    + DividendResult(judgeEnum:GameDirector.JudgeEnum) : void
 }
 CharacterBase <|-- DealerController
-DealerController --> "playerController" PlayerController
-DealerController --> "dividendText" Text
 class GameDirector {
     maxBet : int
     MaxBet : int <<set>>
     minBet : int
     MinBet : int <<set>>
+    defaultPlayersMoney : int
     Start() : void
     + GameStart() : void
     playerScore : int
     dealerScore : int
     Judgement() : void
+    dividendMultiplier : float
+    DividendResult() : void
     playersMoney : int
     IsGameFollow() : bool
     GameOver() : void
     gameClearMoney : int = 10000
     + Stand() : void
+    DividendToPlayer() : void
+    + BetToDealer(bet:int) : void
     + ResetField() : void
     BackGround() : void
     BetLimit() : void
@@ -113,6 +114,7 @@ GameDirector --> "dealerController" DealerController
 GameDirector --> "trumpController" TrumpController
 GameDirector --> "buttonController" ButtonController
 GameDirector --> "judgementText" Text
+GameDirector --> "dividendText" Text
 GameDirector --> "judgeEnum" JudgeEnum
 GameDirector --> "stageEnum" StageEnum
 GameDirector --> "normalBackGround" GameObject
@@ -130,7 +132,7 @@ GotoVipRoomManager --> "gotoVipRoomButton" Button
 GotoVipRoomManager --> "vipRoomText" GameObject
 GotoVipRoomManager --> "vipRoomRuleText" GameObject
 class PlayerController {
-    money : int
+    {static} money : int
     + Money : int <<get>> <<set>>
     bet : int
     + Bet : int <<get>> <<set>>
@@ -147,10 +149,8 @@ class PlayerController {
     + CanDown : bool <<get>>
     + BetUp() : void
     + BetDown() : void
-    ThrowBet() : void
 }
 CharacterBase <|-- PlayerController
-PlayerController --> "dealerController" DealerController
 PlayerController --> "moneyText" Text
 PlayerController --> "betText" Text
 class TitleManager {

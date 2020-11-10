@@ -1,6 +1,6 @@
 @startuml
 class PlayerController {
-    money : int
+    {static} money : int
     + Money : int <<get>> <<set>>
     bet : int
     + Bet : int <<get>> <<set>>
@@ -17,10 +17,8 @@ class PlayerController {
     + CanDown : bool <<get>>
     + BetUp() : void
     + BetDown() : void
-    ThrowBet() : void
 }
 CharacterBase <|-- PlayerController
-PlayerController --> "dealerController" DealerController
 PlayerController --> "moneyText" Text
 PlayerController --> "betText" Text
 @enduml

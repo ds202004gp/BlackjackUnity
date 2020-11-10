@@ -4,16 +4,21 @@ class GameDirector {
     MaxBet : int <<set>>
     minBet : int
     MinBet : int <<set>>
+    defaultPlayersMoney : int
     Start() : void
     + GameStart() : void
     playerScore : int
     dealerScore : int
     Judgement() : void
+    dividendMultiplier : float
+    DividendResult() : void
     playersMoney : int
     IsGameFollow() : bool
     GameOver() : void
     gameClearMoney : int = 10000
     + Stand() : void
+    DividendToPlayer() : void
+    + BetToDealer(bet:int) : void
     + ResetField() : void
     BackGround() : void
     BetLimit() : void
@@ -36,6 +41,7 @@ GameDirector --> "dealerController" DealerController
 GameDirector --> "trumpController" TrumpController
 GameDirector --> "buttonController" ButtonController
 GameDirector --> "judgementText" Text
+GameDirector --> "dividendText" Text
 GameDirector --> "judgeEnum" JudgeEnum
 GameDirector --> "stageEnum" StageEnum
 GameDirector --> "normalBackGround" GameObject

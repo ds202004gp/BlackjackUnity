@@ -2,16 +2,12 @@
 class DealerController {
     {static} bet : int
     + Bet : int <<get>> <<set>>
-    # <<override>> Awake() : void
+    + DividendMultiplier : float <<set>>
+    + Dividend : int <<get>>
     + <<override>> GameStart() : void
     + <<override>> ResetCardsInfo() : void
     UpCard() : void
     + DrawDealer() : void
-    + Dividend : int <<get>>
-    + DividendToPlayer() : void
-    + DividendResult(judgeEnum:GameDirector.JudgeEnum) : void
 }
 CharacterBase <|-- DealerController
-DealerController --> "playerController" PlayerController
-DealerController --> "dividendText" Text
 @enduml
