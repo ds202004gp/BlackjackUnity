@@ -87,7 +87,7 @@ enum StageEnum {
 }
 MonoBehaviour <|-- GameDirector
 GameDirector -left-> "playerController" PlayerController
-GameDirector -right-> "dealerController" DealerController
+GameDirector -down-> "dealerController" DealerController
 GameDirector -up-> "trumpController" TrumpController
 GameDirector -left-> "buttonController" ButtonController
 GameDirector --> "judgeEnum" JudgeEnum
