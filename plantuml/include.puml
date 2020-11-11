@@ -1,4 +1,4 @@
-@startuml
+@startuml gameCore
 class ButtonController {
     - OnEnable() : void
     GotoVipRoom() : void
@@ -16,8 +16,8 @@ class ButtonController {
     StartWindowButtons() : void
     ResultWindowButtons() : void
 }
-MonoBehaviour <|-- ButtonController
-ButtonController --> "gotoVipRoomButton" Button
+MonoBehaviour <|-right- ButtonController
+ButtonController -left-> "gotoVipRoomButton" Button
 ButtonController --> "gotoTitleButton" Button
 ButtonController --> "betUpButton" Button
 ButtonController --> "betDownButton" Button
@@ -50,17 +50,18 @@ class CharacterBase {
 }
 class "List`1"<T> {
 }
-MonoBehaviour <|-- CharacterBase
+MonoBehaviour <|-left- CharacterBase
 CharacterBase --> "characterController" GameObject
-CharacterBase --> "blackjackOrBust" Text
+CharacterBase -down-> "blackjackOrBust" Text
 CharacterBase --> "characterTransform" Transform
+CharacterBase --> "cardPrefab" SpriteRenderer
 CharacterBase --> "gameDirectorObject" GameObject
 CharacterBase --> "gameDirector" GameDirector
-CharacterBase --> "trumpController" TrumpController
+CharacterBase -down-> "trumpController" TrumpController
 CharacterBase --> "scoreText" Text
 CharacterBase --> "characterCards<Card>" "List`1"
-CharacterBase --> "characterCardSprites<SpriteRenderer>" "List`1"
-CharacterBase --> "cardPrefab" SpriteRenderer
+CharacterBase -left-> "characterCardSprites<SpriteRenderer>" "List`1"
+
 class DealerController {
     {static} bet : int
     + Bet : int <<get>> <<set>>
@@ -110,7 +111,7 @@ MonoBehaviour <|-- GameDirector
 GameDirector --> "gameOverPanel" GameObject
 GameDirector --> "gameClearPanel" GameObject
 GameDirector --> "playerController" PlayerController
-GameDirector --> "dealerController" DealerController
+GameDirector -right-> "dealerController" DealerController
 GameDirector --> "trumpController" TrumpController
 GameDirector --> "buttonController" ButtonController
 GameDirector --> "judgementText" Text
@@ -121,16 +122,7 @@ GameDirector --> "normalBackGround" GameObject
 GameDirector --> "vipBackGround" GameObject
 GameDirector +-- JudgeEnum
 GameDirector +-- StageEnum
-class GotoVipRoomManager {
-    Start() : void
-    RuleDescription() : void
-    GotoVipRoom() : void
-}
-MonoBehaviour <|-- GotoVipRoomManager
-GotoVipRoomManager --> "ruleDescriptionButton" Button
-GotoVipRoomManager --> "gotoVipRoomButton" Button
-GotoVipRoomManager --> "vipRoomText" GameObject
-GotoVipRoomManager --> "vipRoomRuleText" GameObject
+
 class PlayerController {
     {static} money : int
     + Money : int <<get>> <<set>>
@@ -151,19 +143,11 @@ class PlayerController {
     + BetDown() : void
 }
 CharacterBase <|-- PlayerController
-PlayerController --> "moneyText" Text
+PlayerController -up-> "moneyText" Text
 PlayerController --> "betText" Text
-class TitleManager {
-    Start() : void
-    GotoMain() : void
-    GameRule() : void
-    BackToTitle() : void
-}
-MonoBehaviour <|-- TitleManager
-TitleManager --> "gotoMainButton" Button
-TitleManager --> "gameRuleButton" Button
-TitleManager --> "backToTitleButton" Button
-TitleManager --> "gameRulePanel" GameObject
+
+@enduml
+@startuml Trump
 class TrumpController {
     + ResetCardsInfo() : void
     CreateCards() : void
@@ -205,4 +189,27 @@ Card <|-- Hart
 Card <|-- Spade
 Card <|-- Clover
 Card <|-- Diamond
+@enduml
+@startuml
+class GotoVipRoomManager {
+    Start() : void
+    RuleDescription() : void
+    GotoVipRoom() : void
+}
+MonoBehaviour <|-- GotoVipRoomManager
+GotoVipRoomManager --> "ruleDescriptionButton" Button
+GotoVipRoomManager --> "gotoVipRoomButton" Button
+GotoVipRoomManager --> "vipRoomText" GameObject
+GotoVipRoomManager --> "vipRoomRuleText" GameObject
+class TitleManager {
+    Start() : void
+    GotoMain() : void
+    GameRule() : void
+    BackToTitle() : void
+}
+MonoBehaviour <|-- TitleManager
+TitleManager --> "gotoMainButton" Button
+TitleManager --> "gameRuleButton" Button
+TitleManager --> "backToTitleButton" Button
+TitleManager --> "gameRulePanel" GameObject
 @enduml

@@ -1,0 +1,184 @@
+@startuml gameCore
+class ButtonController {
+    - OnEnable() : void
+    GotoVipRoom() : void
+    GotoTitleButton() : void
+    BetUpButton() : void
+    BetDownButton() : void
+    CanBetUpDown() : void
+    canDoubleDown : bool
+    StartButton() : void
+    StandButton() : void
+    RetryButton() : void
+    HitButton() : void
+    DoubleDownButton() : void
+    SurrenderButton() : void
+    StartWindowButtons() : void
+    ResultWindowButtons() : void
+}
+MonoBehaviour <|-- ButtonController
+ButtonController -right-> "gameDirector" GameDirector
+ButtonController --> "playerController" PlayerController
+ButtonController --> "dealerController" DealerController
+class CharacterBase {
+    # characterScore : int
+    direction : float
+    # <<virtual>> Awake() : void
+    + <<virtual>> GameStart() : void
+    + <<virtual>> ResetCardsInfo() : void
+    CharacterCardSpritesReset() : void
+    # AddCharacterCards(card:Card) : void
+    # ShowCharacterCards() : void
+    CharacterCardSpritesAdd(cardPos:Vector2) : void
+    CharacterScoreSum() : bool
+    + IsBlackjack : bool <<get>>
+    + IsBust : bool <<get>>
+    # ShowCharacterScore() : void
+    + GetScore() : int
+}
+class "List`1"<T> {
+}
+MonoBehaviour <|-- CharacterBase
+CharacterBase -left-> "gameDirector" GameDirector
+CharacterBase --> "trumpController" TrumpController
+CharacterBase --> "characterCards<Card>" "List`1"
+CharacterBase --> "characterCardSprites<SpriteRenderer>" "List`1"
+
+class DealerController {
+    {static} bet : int
+    + Bet : int <<get>> <<set>>
+    + DividendMultiplier : float <<set>>
+    + Dividend : int <<get>>
+    + <<override>> GameStart() : void
+    + <<override>> ResetCardsInfo() : void
+    UpCard() : void
+    + DrawDealer() : void
+}
+CharacterBase <|-- DealerController
+class GameDirector {
+    maxBet : int
+    MaxBet : int <<set>>
+    minBet : int
+    MinBet : int <<set>>
+    defaultPlayersMoney : int
+    Start() : void
+    + GameStart() : void
+    Judgement() : void
+    DividendResult() : void
+    IsGameFollow() : bool
+    GameOver() : void
+    gameClearMoney : int = 10000
+    + Stand() : void
+    DividendToPlayer() : void
+    + BetToDealer(bet:int) : void
+    + ResetField() : void
+    BackGround() : void
+    BetLimit() : void
+    Update() : void
+}
+enum JudgeEnum {
+    Win,
+    Draw,
+    Lose,
+}
+enum StageEnum {
+    Normal,
+    Vip,
+}
+MonoBehaviour <|-- GameDirector
+GameDirector -left-> "playerController" PlayerController
+GameDirector -right-> "dealerController" DealerController
+GameDirector -up-> "trumpController" TrumpController
+GameDirector -left-> "buttonController" ButtonController
+GameDirector --> "judgeEnum" JudgeEnum
+GameDirector --> "stageEnum" StageEnum
+GameDirector +-- JudgeEnum
+GameDirector +-- StageEnum
+
+class PlayerController {
+    {static} money : int
+    + Money : int <<get>> <<set>>
+    bet : int
+    + Bet : int <<get>> <<set>>
+    + MaxBet : int <<set>>
+    + MinBet : int <<set>>
+    # <<override>> Awake() : void
+    + <<override>> GameStart() : void
+    + <<override>> ResetCardsInfo() : void
+    + Hit() : void
+    + DoubleDown() : void
+    + IsSurrender : bool <<get>>
+    + Surrender() : void
+    + CanUp : bool <<get>>
+    + CanDown : bool <<get>>
+    + BetUp() : void
+    + BetDown() : void
+}
+CharacterBase <|-down- PlayerController
+@enduml
+@startuml Trump
+class TrumpController {
+    + ResetCardsInfo() : void
+    CreateCards() : void
+    ShuffleCards() : void
+    + DrawCard() : Card
+    ConvertNumberForBlackjack(card:Card) : void
+}
+class Card {
+    - number : int
+    - suit : string
+    + Number : int <<get>> <<set>>
+    + Suit : string <<get>> <<set>>
+    # Card(sprite:Sprite, number:int)
+}
+class Hart {
+    + Hart(sprite:Sprite, number:int)
+}
+class Spade {
+    + Spade(sprite:Sprite, number:int)
+}
+class Clover {
+    + Clover(sprite:Sprite, number:int)
+}
+class Diamond {
+    + Diamond(sprite:Sprite, number:int)
+}
+class "List`1"<T> {
+}
+class "Stack`1"<T> {
+}
+MonoBehaviour <|-- TrumpController
+TrumpController -left-> "back" Sprite
+TrumpController --> "Back" Sprite
+TrumpController --> "orderCards<Card>" "List`1"
+TrumpController --> "playingCards<Card>" "Stack`1"
+Card -up-> "sprite" Sprite
+Card --> "Sprite" Sprite
+Card <|-- Hart
+Card <|-- Spade
+Card <|-- Clover
+Card <|-- Diamond
+@enduml
+@startuml
+class GotoVipRoomManager {
+    Start() : void
+    RuleDescription() : void
+    GotoVipRoom() : void
+}
+MonoBehaviour <|-- GotoVipRoomManager
+GotoVipRoomManager --> "ruleDescriptionButton" Button
+GotoVipRoomManager --> "gotoVipRoomButton" Button
+GotoVipRoomManager --> "vipRoomText" GameObject
+GotoVipRoomManager --> "vipRoomRuleText" GameObject
+class TitleManager {
+    Start() : void
+    GotoMain() : void
+    GameRule() : void
+    BackToTitle() : void
+}
+MonoBehaviour <|-- TitleManager
+TitleManager --> "gotoMainButton" Button
+TitleManager --> "gameRuleButton" Button
+TitleManager --> "backToTitleButton" Button
+TitleManager --> "gameRulePanel" GameObject
+@enduml
