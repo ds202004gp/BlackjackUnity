@@ -26,8 +26,5 @@ public class GotoVipRoomManager : MonoBehaviour
         vipRoomText.SetActive(false);
         vipRoomRuleText.SetActive(true);
     }
-    void GotoVipRoom()
-    {
-        SceneManager.LoadScene("MainScene");
-    }
+    void GotoVipRoom() => SceneManager.LoadScene("MainScene");
 }

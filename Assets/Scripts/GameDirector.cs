@@ -82,8 +82,6 @@ public class GameDirector : MonoBehaviour
         Draw,
         Lose,
     }
-    int playerScore;
-    int dealerScore;
     void Judgement()
     {
         if (playerController.IsSurrender)
@@ -94,8 +92,8 @@ public class GameDirector : MonoBehaviour
             return;
         }
 
-        playerScore = playerController.GetScore();
-        dealerScore = dealerController.GetScore();
+        int playerScore = playerController.GetScore();
+        int dealerScore = dealerController.GetScore();
 
         if (playerScore > dealerScore)
         {
@@ -116,22 +114,15 @@ public class GameDirector : MonoBehaviour
             judgementText.color = Color.blue;
         }
     }
-    float dividendMultiplier;
     void DividendResult()
     {
+        float dividendMultiplier = 0;
+
         switch (judgeEnum)
         {
             case JudgeEnum.Win:
 
-                if (playerController.IsBlackjack)
-                {
-                    dividendMultiplier = 2.5f;
-                }
-                else
-                {
-                    dividendMultiplier = 2;
-                }
-
+                dividendMultiplier = playerController.IsBlackjack ? 2.5f : 2;
                 dividendText.color = Color.yellow;
                 break;
 
@@ -143,10 +134,7 @@ public class GameDirector : MonoBehaviour
 
             case JudgeEnum.Lose:
 
-                if (!playerController.IsSurrender)
-                {
-                    return;
-                }
+                if (!playerController.IsSurrender) return;
 
                 dividendMultiplier = 0.5f;
                 dividendText.color = Color.blue;
@@ -157,54 +145,38 @@ public class GameDirector : MonoBehaviour
         dividendText.text = $"+ ${dealerController.Dividend}";
     }
 
-    int playersMoney;
-    bool IsGameFollow()
-    {
-        playersMoney = playerController.Money + dealerController.Dividend;
-        return playersMoney >= minBet;
-    }
+    int PlayersMoney => playerController.Money + dealerController.Dividend;
+    bool IsGameOver => PlayersMoney < minBet;
+    bool IsGameClear => PlayersMoney >= gameClearMoney;
     void GameOver()
     {
         stageEnum = StageEnum.Normal;
         gameOverPanel.SetActive(true);
     }
+    void GameClear()
+    {
+        stageEnum = StageEnum.Vip;
+        gameClearPanel.SetActive(true);
+    }
     [SerializeField]
     int gameClearMoney = 10000;
     public void Stand()
     {
-        if (!playerController.IsSurrender)
-        {
-            dealerController.DrawDealer();
-        }
+        if (!playerController.IsSurrender) dealerController.DrawDealer();
 
         Judgement();
         DividendResult();
 
-        if (!IsGameFollow())
-        {
-            GameOver();
-        }
-
-        if (stageEnum == StageEnum.Vip)
-        {
-            return;
-        }
-
-        if (playersMoney >= gameClearMoney)
-        {
-            stageEnum = StageEnum.Vip;
-            gameClearPanel.SetActive(true);
-        }
-    }
-    void DividendToPlayer()
-    {
-        playerController.Money += dealerController.Dividend;
+        if (IsGameOver) GameOver();
+        if (stageEnum == StageEnum.Vip) return;
+        if (IsGameClear) GameClear();
     }
     public void BetToDealer(int bet)
     {
         playerController.Money -= bet;
         dealerController.Bet += bet;
     }
+    void DividendToPlayer() => playerController.Money = PlayersMoney;
     public void ResetField()
     {
         DividendToPlayer();
@@ -235,17 +207,22 @@ public class GameDirector : MonoBehaviour
     }
     void BetLimit()
     {
-        if (stageEnum == StageEnum.Normal)
+        switch (stageEnum)
         {
-            MinBet = minBet;
-            MaxBet = maxBet;
-        }
-        else if (stageEnum == StageEnum.Vip)
-        {
-            MinBet = dealerController.Bet;
-            MaxBet = minBet * 10;
+            case StageEnum.Normal:
+
+                MinBet = minBet;
+                MaxBet = maxBet;
+                break;
+
+            case StageEnum.Vip:
+
+                MinBet = dealerController.Bet;
+                MaxBet = minBet * 10;
+                break;
         }
     }
+
     void Update()
     {
         if (Input.GetKey(KeyCode.Escape))

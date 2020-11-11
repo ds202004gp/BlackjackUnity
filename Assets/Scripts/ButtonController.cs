@@ -83,12 +83,11 @@ public class ButtonController : MonoBehaviour
         betDownButton.gameObject.SetActive(playerController.CanDown);
     }
 
-    bool canDoubleDown;
+    bool canDoubleDown => playerController.Money - dealerController.Bet >= 0;
+
     void StartButton()
     {
         gameDirector.GameStart();
-
-        canDoubleDown = playerController.Money - dealerController.Bet >= 0;
 
         startButton.gameObject.SetActive(false);
         standButton.gameObject.SetActive(true);

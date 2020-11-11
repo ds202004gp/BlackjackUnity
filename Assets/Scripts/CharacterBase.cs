@@ -99,19 +99,14 @@ public class CharacterBase : MonoBehaviour
         characterCardSprites.Add(card);
     }
 
-    int score;
-    int aceCount;
     bool CharacterScoreSum()
     {
-        score = 0;
-        aceCount = 0;
+        int score = 0;
+        int aceCount = 0;
 
         foreach (Card card in characterCards)
         {
-            if (card.Number == 11)
-            {
-                aceCount++;
-            }
+            if (card.Number == 11) aceCount++;
             score += card.Number;
         }
 

@@ -81,19 +81,10 @@ public class PlayerController : CharacterBase
         Hit();
     }
     public bool IsSurrender { get; private set; }
-    public void Surrender()
-    {
-        IsSurrender = true;
-    }
+    public void Surrender() => IsSurrender = true;
 
     public bool CanUp { get => bet + MinBet <= MaxBet; }
     public bool CanDown { get => bet > MinBet; }
-    public void BetUp()
-    {
-        Bet += MinBet;
-    }
-    public void BetDown()
-    {
-        Bet -= MinBet;
-    }
+    public void BetUp() => Bet += MinBet;
+    public void BetDown() => Bet -= MinBet;
 }

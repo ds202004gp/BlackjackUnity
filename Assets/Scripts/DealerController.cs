@@ -33,10 +33,7 @@ public class DealerController : CharacterBase
             ShowCharacterCards();
             ShowCharacterScore();
 
-            if (characterScore >= 17)
-            {
-                break;
-            }
+            if (characterScore >= 17) break;
 
             AddCharacterCards(trumpController.DrawCard());
         }
