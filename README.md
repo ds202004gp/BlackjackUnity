@@ -1,9 +1,9 @@
-# BlackjackUnity
-Windowsフォームアプリで作成したBLACKJACKのUnity移植版
+# Blackjack
+Windowsフォームアプリで作成した「BLACKJACK」のUnity移植版
 
 ## ■ テーマ：
  - サンプルコードを使わず、自作で既存のゲームの動きを実現させる。
- - 上記をもとにWindowsフォームアプリで制作したBLACKJACKを、Unityに移植する。
+ - 上記をもとに制作したWindowsフォームアプリの「BLACKJACK」を、Unityに移植する。
 ## ■ ジャンル：
  - カードゲーム
 ## ■ ターゲット層：
