@@ -43,8 +43,7 @@ Windowsフォームアプリで作成したBLACKJACKのUnity移植版
  - MONEYが、＄10,000を超えたらゲームクリア。
  - MONEYが、BETの最低額を支払えなくなったらゲームオーバー。
 
-（イラスト）
-
+![BLACKJACK](BLACKJACK.png)
 
 ### コマンドの説明
  - #### GAMESTART
