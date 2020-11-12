@@ -39,7 +39,6 @@ public class CharacterBase : MonoBehaviour
     protected virtual void Awake()
     {
         gameDirector = gameDirectorObject.GetComponent<GameDirector>();
-        trumpController = gameDirectorObject.GetComponent<TrumpController>();
 
         characterCardSprites = new List<SpriteRenderer>();
         characterCardSprites =
@@ -47,8 +46,8 @@ public class CharacterBase : MonoBehaviour
     }
     public virtual void GameStart()
     {
-        AddCharacterCards(trumpController.DrawCard());
-        AddCharacterCards(trumpController.DrawCard());
+        AddCharacterCards(gameDirector.DrawCard());
+        AddCharacterCards(gameDirector.DrawCard());
     }
     public virtual void ResetCardsInfo()
     {

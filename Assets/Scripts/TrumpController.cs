@@ -58,20 +58,7 @@ public class TrumpController : MonoBehaviour
 
     public Card DrawCard()
     {
-        Card drawCard = playingCards.Pop();
-        ConvertNumberForBlackjack(drawCard);
-        return drawCard;
-    }
-    void ConvertNumberForBlackjack(Card card)
-    {
-        if (card.Number == 1)
-        {
-            card.Number = 11;
-        }
-        else if (card.Number > 10)
-        {
-            card.Number = 10;
-        }
+        return playingCards.Pop();
     }
 }
 

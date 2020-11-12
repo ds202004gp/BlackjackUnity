@@ -68,6 +68,17 @@ public class GameDirector : MonoBehaviour
 
         buttonController.enabled = true;
     }
+    public Card DrawCard()
+    {
+        Card drawCard = trumpController.DrawCard();
+        ConvertNumberForBlackjack(drawCard);
+        return drawCard;
+    }
+    void ConvertNumberForBlackjack(Card card)
+    {
+        if (card.Number == 1) card.Number = 11;
+        else if (card.Number > 10) card.Number = 10;
+    }
 
     public void GameStart()
     {
