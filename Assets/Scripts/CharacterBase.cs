@@ -39,6 +39,7 @@ public class CharacterBase : MonoBehaviour
     protected virtual void Awake()
     {
         gameDirector = gameDirectorObject.GetComponent<GameDirector>();
+        trumpController = gameDirectorObject.GetComponent<TrumpController>();
 
         characterCardSprites = new List<SpriteRenderer>();
         characterCardSprites =
