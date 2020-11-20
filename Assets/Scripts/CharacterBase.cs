@@ -47,13 +47,11 @@ public class CharacterBase : MonoBehaviour
     }
     public virtual void GameStart()
     {
-        AddCharacterCards(gameDirector.DrawCard());
-        AddCharacterCards(gameDirector.DrawCard());
+        AddCharacterCards();
+        AddCharacterCards();
     }
     public virtual void ResetCardsInfo()
     {
-        IsBlackjack = false;
-        IsBust = false;
         blackjackOrBust.text = "";
         characterCards = new List<Card>();
         ShowCharacterScore();
@@ -71,9 +69,9 @@ public class CharacterBase : MonoBehaviour
             characterCardSprites[i].gameObject.SetActive(false);
         }
     }
-    protected void AddCharacterCards(Card card)
+    protected void AddCharacterCards()
     {
-        characterCards.Add(card);
+        characterCards.Add(gameDirector.DrawCard());
     }
 
     protected void ShowCharacterCards()
@@ -99,7 +97,7 @@ public class CharacterBase : MonoBehaviour
         characterCardSprites.Add(card);
     }
 
-    bool CharacterScoreSum()
+    void CharacterScoreSum()
     {
         int score = 0;
         int aceCount = 0;
@@ -117,16 +115,14 @@ public class CharacterBase : MonoBehaviour
         }
 
         characterScore = score;
-        return score == 21 && characterCards.Count == 2;
     }
 
-    public bool IsBlackjack { get; private set; }
-    public bool IsBust { get; private set; }
+    public bool IsBlackjack { get => characterScore == 21 && characterCards.Count == 2; }
+    public bool IsBust { get => characterScore > 21; }
 
     protected void ShowCharacterScore()
     {
-        IsBlackjack = CharacterScoreSum();
-        IsBust = characterScore > 21;
+        CharacterScoreSum();
 
         if (IsBlackjack)
         {

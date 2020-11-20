@@ -71,7 +71,7 @@ public class PlayerController : CharacterBase
     }
     public void Hit()
     {
-        AddCharacterCards(trumpController.DrawCard());
+        AddCharacterCards();
         ShowCharacterCards();
         ShowCharacterScore();
     }

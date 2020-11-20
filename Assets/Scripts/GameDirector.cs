@@ -76,8 +76,8 @@ public class GameDirector : MonoBehaviour
     }
     void ConvertNumberForBlackjack(Card card)
     {
+        if (card.Number > 10) card.Number = 10;
         if (card.Number == 1) card.Number = 11;
-        else if (card.Number > 10) card.Number = 10;
     }
 
     public void GameStart()
@@ -241,7 +241,7 @@ public class GameDirector : MonoBehaviour
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
 #else
-        Application.Quit();
+            Application.Quit();
 #endif
         }
     }
